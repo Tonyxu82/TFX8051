@@ -1,0 +1,39 @@
+[ADDRESS]
+P0 = REG_P0 + 0x80
+P1 = REG_P1 + 0x80
+P2 = REG_P2 + 0x80
+P3 = REG_P3 + 0x80
+
+void *writer_scon(void *q)
+void *reader_scon(void *q)
+void *writer_pad(void *q)
+void *writer_led(void *q)
+void *reader_pad(void *q)
+void *reader_led(void *q)
+
+
+        aCPU->mSFR[address - 0x80] = ACC;
+        if((address - 0x80) == REG_SBUF){
+            aCPU->sstate = SENDING;
+        }
+
+        if((address - 0x80) == REG_P0){
+            aCPU->p0state = SENDING;
+        }
+
+        if((address - 0x80) == REG_P1){
+            aCPU->p1state = SENDING;
+        }
+
+        if((address - 0x80) == REG_P2){
+            aCPU->p2state = SENDING;
+        }
+
+
+        if((address - 0x80) == REG_P3){
+            aCPU->p3state = SENDING;
+        }
+
+
+        if (aCPU->sfrwrite)
+            aCPU->sfrwrite(aCPU, address);

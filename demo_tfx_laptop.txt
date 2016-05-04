@@ -1,0 +1,87 @@
+gcc ut_tfx_io.c tfx_test.c tfx_io.c -std=c99 -o ut
+
+gcc twister.c -DNOCOMPILE -o twister
+
+[DEMO of TFX]
+gcc demo_tfx_10.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c tfx_coverage.c -std=c99 -D_BSD_SOURCE -o demo10
+
+./demo10 sort.hex
+
+gcc demo_tfx_4.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c -std=c99 -D_BSD_SOURCE -o demo4
+
+./demo4 sort4.hex
+
+
+[DEMO of Trace Replay]
+gcc demo_tfx_replay.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c -std=c99 -D_BSD_SOURCE -o demo_replay
+
+./demo_replay sort.hex trace/sort10_trace_00001.bin
+
+
+[KLEE for sort10.hex]
+
+clang-3.4 -I/home/tonyxu/Project/klee/klee/include/klee -emit-llvm -g -c demo_tfx_10_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOURCE
+
+llvm-link core.bc disasm.bc opcodes.bc tfx_test.bc demo_tfx_10_klee.bc -o demo10klee.bc
+
+klee --libc=uclibc --posix-runtime --allow-external-sym-calls ./demo10klee.bc sort.hex
+
+ktest-tool --write-ints klee-last/test000001.ktest
+
+[KLEE for sort4.hex]
+
+clang-3.4 -I/home/tonyxu/Project/klee/include/klee -emit-llvm -g -c demo_tfx_4_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOURCE
+
+llvm-link core.bc disasm.bc opcodes.bc tfx_test.bc demo_tfx_4_klee.bc -o demo4klee.bc
+
+klee --libc=uclibc --posix-runtime --allow-external-sym-calls ./demo4klee.bc sort4.hex
+
+ktest-tool --write-ints klee-last/test000001.ktest
+
+[KLEE for Trace Replay]
+clang-3.4 -I/home/tonyxu/Project/klee/include/klee -emit-llvm -g -c demo_tfx_replay_klee.c tfx_test.c core.c opcodes.c disasm.c tfx_trace.c tfx_io.c -std=c99 -D_BSD_SOURCE
+
+llvm-link core.bc disasm.bc opcodes.bc tfx_trace.bc tfx_test.bc tfx_io.bc demo_tfx_replay_klee.bc -o demo_replay_klee.bc
+
+klee --libc=uclibc --posix-runtime --allow-external-sym-calls ./demo_replay_klee.bc sort.hex trace/sort10_trace_00000.bin
+
+
+
+
+
+
+
+
+
+//Replay on ut_test_klee
+export LD_LIBRARY_PATH=/home/tonyxu/Project/klee/Release+Asserts/lib:$LD_LIBRARY_PATH
+
+
+clang-3.4 -I/home/tonyxu/Project/klee/include/klee -L /home/tonyxu/Project/klee/Release+Asserts/lib ut_tfx_test_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOURCE -lkleeRuntest -o all
+
+KTEST_FILE=klee-last/test000001.ktest ./all sort.hex
+
+//ut_tset_klee without argument
+clang-3.4 -I/home/tonyxu/Project/klee/include/klee -emit-llvm -g -c ut_tfx_test_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOURCE
+
+llvm-link core.bc disasm.bc opcodes.bc tfx_test.bc ut_tfx_test_klee.bc -o all.bc
+
+klee --libc=uclibc --posix-runtime --allow-external-sym-calls ./all.bc
+klee --libc=uclibc  --allow-external-sym-calls ./all.bc
+
+ktest-tool --write-ints klee-last/test000001.ktest
+
+
+//Replay on ut_test_klee
+export LD_LIBRARY_PATH=/home/tonyxu/Project/klee/Release+Asserts/lib:$LD_LIBRARY_PATH
+
+
+clang-3.4 -I/home/tonyxu/Project/klee/include/klee -L /home/tonyxu/Project/klee/Release+Asserts/lib ut_tfx_test_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOURCE -lkleeRuntest -o all
+
+gcc ut_tfx_test_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOURCE  -o all
+
+KTEST_FILE=klee-last/test000001.ktest ./all
+
+//Replay Trace
+
+

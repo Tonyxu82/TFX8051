@@ -1,0 +1,11 @@
+
+Define a set of Macro for each instruction
+
+	MOV(R, R0)
+	JZ(Lable)
+Lable:
+	XCHD(A, @R1)
+
+
+
+

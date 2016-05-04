@@ -1,0 +1,581 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.3.0 #8604 (Dec 30 2013) (Linux)
+                              4 ; This file was generated Sun May  1 16:57:11 2016
+                              5 ;--------------------------------------------------------
+                              6 	.module sort
+                              7 	.optsdcc -mmcs51 --model-small
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _bubble_sort_PARM_2
+                             13 	.globl _main
+                             14 	.globl _TF2
+                             15 	.globl _EXF2
+                             16 	.globl _RCLK
+                             17 	.globl _TCLK
+                             18 	.globl _EXEN2
+                             19 	.globl _TR2
+                             20 	.globl _C_T2
+                             21 	.globl _CP_RL2
+                             22 	.globl _T2CON_7
+                             23 	.globl _T2CON_6
+                             24 	.globl _T2CON_5
+                             25 	.globl _T2CON_4
+                             26 	.globl _T2CON_3
+                             27 	.globl _T2CON_2
+                             28 	.globl _T2CON_1
+                             29 	.globl _T2CON_0
+                             30 	.globl _PT2
+                             31 	.globl _ET2
+                             32 	.globl _CY
+                             33 	.globl _AC
+                             34 	.globl _F0
+                             35 	.globl _RS1
+                             36 	.globl _RS0
+                             37 	.globl _OV
+                             38 	.globl _F1
+                             39 	.globl _P
+                             40 	.globl _PS
+                             41 	.globl _PT1
+                             42 	.globl _PX1
+                             43 	.globl _PT0
+                             44 	.globl _PX0
+                             45 	.globl _RD
+                             46 	.globl _WR
+                             47 	.globl _T1
+                             48 	.globl _T0
+                             49 	.globl _INT1
+                             50 	.globl _INT0
+                             51 	.globl _TXD
+                             52 	.globl _RXD
+                             53 	.globl _P3_7
+                             54 	.globl _P3_6
+                             55 	.globl _P3_5
+                             56 	.globl _P3_4
+                             57 	.globl _P3_3
+                             58 	.globl _P3_2
+                             59 	.globl _P3_1
+                             60 	.globl _P3_0
+                             61 	.globl _EA
+                             62 	.globl _ES
+                             63 	.globl _ET1
+                             64 	.globl _EX1
+                             65 	.globl _ET0
+                             66 	.globl _EX0
+                             67 	.globl _P2_7
+                             68 	.globl _P2_6
+                             69 	.globl _P2_5
+                             70 	.globl _P2_4
+                             71 	.globl _P2_3
+                             72 	.globl _P2_2
+                             73 	.globl _P2_1
+                             74 	.globl _P2_0
+                             75 	.globl _SM0
+                             76 	.globl _SM1
+                             77 	.globl _SM2
+                             78 	.globl _REN
+                             79 	.globl _TB8
+                             80 	.globl _RB8
+                             81 	.globl _TI
+                             82 	.globl _RI
+                             83 	.globl _P1_7
+                             84 	.globl _P1_6
+                             85 	.globl _P1_5
+                             86 	.globl _P1_4
+                             87 	.globl _P1_3
+                             88 	.globl _P1_2
+                             89 	.globl _P1_1
+                             90 	.globl _P1_0
+                             91 	.globl _TF1
+                             92 	.globl _TR1
+                             93 	.globl _TF0
+                             94 	.globl _TR0
+                             95 	.globl _IE1
+                             96 	.globl _IT1
+                             97 	.globl _IE0
+                             98 	.globl _IT0
+                             99 	.globl _P0_7
+                            100 	.globl _P0_6
+                            101 	.globl _P0_5
+                            102 	.globl _P0_4
+                            103 	.globl _P0_3
+                            104 	.globl _P0_2
+                            105 	.globl _P0_1
+                            106 	.globl _P0_0
+                            107 	.globl _TH2
+                            108 	.globl _TL2
+                            109 	.globl _RCAP2H
+                            110 	.globl _RCAP2L
+                            111 	.globl _T2CON
+                            112 	.globl _B
+                            113 	.globl _ACC
+                            114 	.globl _PSW
+                            115 	.globl _IP
+                            116 	.globl _P3
+                            117 	.globl _IE
+                            118 	.globl _P2
+                            119 	.globl _SBUF
+                            120 	.globl _SCON
+                            121 	.globl _P1
+                            122 	.globl _TH1
+                            123 	.globl _TH0
+                            124 	.globl _TL1
+                            125 	.globl _TL0
+                            126 	.globl _TMOD
+                            127 	.globl _TCON
+                            128 	.globl _PCON
+                            129 	.globl _DPH
+                            130 	.globl _DPL
+                            131 	.globl _SP
+                            132 	.globl _P0
+                            133 	.globl _array
+                            134 	.globl _bubble_sort
+                            135 ;--------------------------------------------------------
+                            136 ; special function registers
+                            137 ;--------------------------------------------------------
+                            138 	.area RSEG    (ABS,DATA)
+   0000                     139 	.org 0x0000
+                     0080   140 _P0	=	0x0080
+                     0081   141 _SP	=	0x0081
+                     0082   142 _DPL	=	0x0082
+                     0083   143 _DPH	=	0x0083
+                     0087   144 _PCON	=	0x0087
+                     0088   145 _TCON	=	0x0088
+                     0089   146 _TMOD	=	0x0089
+                     008A   147 _TL0	=	0x008a
+                     008B   148 _TL1	=	0x008b
+                     008C   149 _TH0	=	0x008c
+                     008D   150 _TH1	=	0x008d
+                     0090   151 _P1	=	0x0090
+                     0098   152 _SCON	=	0x0098
+                     0099   153 _SBUF	=	0x0099
+                     00A0   154 _P2	=	0x00a0
+                     00A8   155 _IE	=	0x00a8
+                     00B0   156 _P3	=	0x00b0
+                     00B8   157 _IP	=	0x00b8
+                     00D0   158 _PSW	=	0x00d0
+                     00E0   159 _ACC	=	0x00e0
+                     00F0   160 _B	=	0x00f0
+                     00C8   161 _T2CON	=	0x00c8
+                     00CA   162 _RCAP2L	=	0x00ca
+                     00CB   163 _RCAP2H	=	0x00cb
+                     00CC   164 _TL2	=	0x00cc
+                     00CD   165 _TH2	=	0x00cd
+                            166 ;--------------------------------------------------------
+                            167 ; special function bits
+                            168 ;--------------------------------------------------------
+                            169 	.area RSEG    (ABS,DATA)
+   0000                     170 	.org 0x0000
+                     0080   171 _P0_0	=	0x0080
+                     0081   172 _P0_1	=	0x0081
+                     0082   173 _P0_2	=	0x0082
+                     0083   174 _P0_3	=	0x0083
+                     0084   175 _P0_4	=	0x0084
+                     0085   176 _P0_5	=	0x0085
+                     0086   177 _P0_6	=	0x0086
+                     0087   178 _P0_7	=	0x0087
+                     0088   179 _IT0	=	0x0088
+                     0089   180 _IE0	=	0x0089
+                     008A   181 _IT1	=	0x008a
+                     008B   182 _IE1	=	0x008b
+                     008C   183 _TR0	=	0x008c
+                     008D   184 _TF0	=	0x008d
+                     008E   185 _TR1	=	0x008e
+                     008F   186 _TF1	=	0x008f
+                     0090   187 _P1_0	=	0x0090
+                     0091   188 _P1_1	=	0x0091
+                     0092   189 _P1_2	=	0x0092
+                     0093   190 _P1_3	=	0x0093
+                     0094   191 _P1_4	=	0x0094
+                     0095   192 _P1_5	=	0x0095
+                     0096   193 _P1_6	=	0x0096
+                     0097   194 _P1_7	=	0x0097
+                     0098   195 _RI	=	0x0098
+                     0099   196 _TI	=	0x0099
+                     009A   197 _RB8	=	0x009a
+                     009B   198 _TB8	=	0x009b
+                     009C   199 _REN	=	0x009c
+                     009D   200 _SM2	=	0x009d
+                     009E   201 _SM1	=	0x009e
+                     009F   202 _SM0	=	0x009f
+                     00A0   203 _P2_0	=	0x00a0
+                     00A1   204 _P2_1	=	0x00a1
+                     00A2   205 _P2_2	=	0x00a2
+                     00A3   206 _P2_3	=	0x00a3
+                     00A4   207 _P2_4	=	0x00a4
+                     00A5   208 _P2_5	=	0x00a5
+                     00A6   209 _P2_6	=	0x00a6
+                     00A7   210 _P2_7	=	0x00a7
+                     00A8   211 _EX0	=	0x00a8
+                     00A9   212 _ET0	=	0x00a9
+                     00AA   213 _EX1	=	0x00aa
+                     00AB   214 _ET1	=	0x00ab
+                     00AC   215 _ES	=	0x00ac
+                     00AF   216 _EA	=	0x00af
+                     00B0   217 _P3_0	=	0x00b0
+                     00B1   218 _P3_1	=	0x00b1
+                     00B2   219 _P3_2	=	0x00b2
+                     00B3   220 _P3_3	=	0x00b3
+                     00B4   221 _P3_4	=	0x00b4
+                     00B5   222 _P3_5	=	0x00b5
+                     00B6   223 _P3_6	=	0x00b6
+                     00B7   224 _P3_7	=	0x00b7
+                     00B0   225 _RXD	=	0x00b0
+                     00B1   226 _TXD	=	0x00b1
+                     00B2   227 _INT0	=	0x00b2
+                     00B3   228 _INT1	=	0x00b3
+                     00B4   229 _T0	=	0x00b4
+                     00B5   230 _T1	=	0x00b5
+                     00B6   231 _WR	=	0x00b6
+                     00B7   232 _RD	=	0x00b7
+                     00B8   233 _PX0	=	0x00b8
+                     00B9   234 _PT0	=	0x00b9
+                     00BA   235 _PX1	=	0x00ba
+                     00BB   236 _PT1	=	0x00bb
+                     00BC   237 _PS	=	0x00bc
+                     00D0   238 _P	=	0x00d0
+                     00D1   239 _F1	=	0x00d1
+                     00D2   240 _OV	=	0x00d2
+                     00D3   241 _RS0	=	0x00d3
+                     00D4   242 _RS1	=	0x00d4
+                     00D5   243 _F0	=	0x00d5
+                     00D6   244 _AC	=	0x00d6
+                     00D7   245 _CY	=	0x00d7
+                     00AD   246 _ET2	=	0x00ad
+                     00BD   247 _PT2	=	0x00bd
+                     00C8   248 _T2CON_0	=	0x00c8
+                     00C9   249 _T2CON_1	=	0x00c9
+                     00CA   250 _T2CON_2	=	0x00ca
+                     00CB   251 _T2CON_3	=	0x00cb
+                     00CC   252 _T2CON_4	=	0x00cc
+                     00CD   253 _T2CON_5	=	0x00cd
+                     00CE   254 _T2CON_6	=	0x00ce
+                     00CF   255 _T2CON_7	=	0x00cf
+                     00C8   256 _CP_RL2	=	0x00c8
+                     00C9   257 _C_T2	=	0x00c9
+                     00CA   258 _TR2	=	0x00ca
+                     00CB   259 _EXEN2	=	0x00cb
+                     00CC   260 _TCLK	=	0x00cc
+                     00CD   261 _RCLK	=	0x00cd
+                     00CE   262 _EXF2	=	0x00ce
+                     00CF   263 _TF2	=	0x00cf
+                            264 ;--------------------------------------------------------
+                            265 ; overlayable register banks
+                            266 ;--------------------------------------------------------
+                            267 	.area REG_BANK_0	(REL,OVR,DATA)
+   0000                     268 	.ds 8
+                            269 ;--------------------------------------------------------
+                            270 ; internal ram data
+                            271 ;--------------------------------------------------------
+                            272 	.area DSEG    (DATA)
+   0000                     273 _array::
+   0000                     274 	.ds 50
+                            275 ;--------------------------------------------------------
+                            276 ; overlayable items in internal ram 
+                            277 ;--------------------------------------------------------
+                            278 	.area	OSEG    (OVR,DATA)
+   0000                     279 _bubble_sort_PARM_2:
+   0000                     280 	.ds 2
+   0002                     281 _bubble_sort_list_1_5:
+   0002                     282 	.ds 3
+   0005                     283 _bubble_sort_c_1_6:
+   0005                     284 	.ds 1
+   0006                     285 _bubble_sort_d_1_6:
+   0006                     286 	.ds 1
+   0007                     287 _bubble_sort_sloc0_1_0:
+   0007                     288 	.ds 2
+   0009                     289 _bubble_sort_sloc1_1_0:
+   0009                     290 	.ds 3
+                            291 ;--------------------------------------------------------
+                            292 ; Stack segment in internal ram 
+                            293 ;--------------------------------------------------------
+                            294 	.area	SSEG	(DATA)
+   0000                     295 __start__stack:
+   0000                     296 	.ds	1
+                            297 
+                            298 ;--------------------------------------------------------
+                            299 ; indirectly addressable internal ram data
+                            300 ;--------------------------------------------------------
+                            301 	.area ISEG    (DATA)
+                            302 ;--------------------------------------------------------
+                            303 ; absolute internal ram data
+                            304 ;--------------------------------------------------------
+                            305 	.area IABS    (ABS,DATA)
+                            306 	.area IABS    (ABS,DATA)
+                            307 ;--------------------------------------------------------
+                            308 ; bit data
+                            309 ;--------------------------------------------------------
+                            310 	.area BSEG    (BIT)
+                            311 ;--------------------------------------------------------
+                            312 ; paged external ram data
+                            313 ;--------------------------------------------------------
+                            314 	.area PSEG    (PAG,XDATA)
+                            315 ;--------------------------------------------------------
+                            316 ; external ram data
+                            317 ;--------------------------------------------------------
+                            318 	.area XSEG    (XDATA)
+                            319 ;--------------------------------------------------------
+                            320 ; absolute external ram data
+                            321 ;--------------------------------------------------------
+                            322 	.area XABS    (ABS,XDATA)
+                            323 ;--------------------------------------------------------
+                            324 ; external initialized ram data
+                            325 ;--------------------------------------------------------
+                            326 	.area XISEG   (XDATA)
+                            327 	.area HOME    (CODE)
+                            328 	.area GSINIT0 (CODE)
+                            329 	.area GSINIT1 (CODE)
+                            330 	.area GSINIT2 (CODE)
+                            331 	.area GSINIT3 (CODE)
+                            332 	.area GSINIT4 (CODE)
+                            333 	.area GSINIT5 (CODE)
+                            334 	.area GSINIT  (CODE)
+                            335 	.area GSFINAL (CODE)
+                            336 	.area CSEG    (CODE)
+                            337 ;--------------------------------------------------------
+                            338 ; interrupt vector 
+                            339 ;--------------------------------------------------------
+                            340 	.area HOME    (CODE)
+   0000                     341 __interrupt_vect:
+   0000 02r00r00      [24]  342 	ljmp	__sdcc_gsinit_startup
+                            343 ;--------------------------------------------------------
+                            344 ; global & static initialisations
+                            345 ;--------------------------------------------------------
+                            346 	.area HOME    (CODE)
+                            347 	.area GSINIT  (CODE)
+                            348 	.area GSFINAL (CODE)
+                            349 	.area GSINIT  (CODE)
+                            350 	.globl __sdcc_gsinit_startup
+                            351 	.globl __sdcc_program_startup
+                            352 	.globl __start__stack
+                            353 	.globl __mcs51_genXINIT
+                            354 	.globl __mcs51_genXRAMCLEAR
+                            355 	.globl __mcs51_genRAMCLEAR
+                            356 	.area GSFINAL (CODE)
+   0000 02r00r03      [24]  357 	ljmp	__sdcc_program_startup
+                            358 ;--------------------------------------------------------
+                            359 ; Home
+                            360 ;--------------------------------------------------------
+                            361 	.area HOME    (CODE)
+                            362 	.area HOME    (CODE)
+   0003                     363 __sdcc_program_startup:
+   0003 02r00r00      [24]  364 	ljmp	_main
+                            365 ;	return from main will return to caller
+                            366 ;--------------------------------------------------------
+                            367 ; code
+                            368 ;--------------------------------------------------------
+                            369 	.area CSEG    (CODE)
+                            370 ;------------------------------------------------------------
+                            371 ;Allocation info for local variables in function 'main'
+                            372 ;------------------------------------------------------------
+                            373 ;i                         Allocated to registers r6 r7 
+                            374 ;------------------------------------------------------------
+                            375 ;	sort.c:6: void main(){
+                            376 ;	-----------------------------------------
+                            377 ;	 function main
+                            378 ;	-----------------------------------------
+   0000                     379 _main:
+                     0007   380 	ar7 = 0x07
+                     0006   381 	ar6 = 0x06
+                     0005   382 	ar5 = 0x05
+                     0004   383 	ar4 = 0x04
+                     0003   384 	ar3 = 0x03
+                     0002   385 	ar2 = 0x02
+                     0001   386 	ar1 = 0x01
+                     0000   387 	ar0 = 0x00
+                            388 ;	sort.c:9: for(i = 0; i < 50; i++) {
+   0000 7E 00         [12]  389 	mov	r6,#0x00
+   0002 7F 00         [12]  390 	mov	r7,#0x00
+   0004                     391 00106$:
+                            392 ;	sort.c:10: array[i] = P0;
+   0004 EE            [12]  393 	mov	a,r6
+   0005 24r00         [12]  394 	add	a,#_array
+   0007 F8            [12]  395 	mov	r0,a
+   0008 A6 80         [24]  396 	mov	@r0,_P0
+                            397 ;	sort.c:9: for(i = 0; i < 50; i++) {
+   000A 0E            [12]  398 	inc	r6
+   000B BE 00 01      [24]  399 	cjne	r6,#0x00,00126$
+   000E 0F            [12]  400 	inc	r7
+   000F                     401 00126$:
+   000F C3            [12]  402 	clr	c
+   0010 EE            [12]  403 	mov	a,r6
+   0011 94 32         [12]  404 	subb	a,#0x32
+   0013 EF            [12]  405 	mov	a,r7
+   0014 64 80         [12]  406 	xrl	a,#0x80
+   0016 94 80         [12]  407 	subb	a,#0x80
+   0018 40 EA         [24]  408 	jc	00106$
+                            409 ;	sort.c:13: bubble_sort(array, 50);
+   001A 75*00 32      [24]  410 	mov	_bubble_sort_PARM_2,#0x32
+   001D 75*01 00      [24]  411 	mov	(_bubble_sort_PARM_2 + 1),#0x00
+   0020 90r00r00      [24]  412 	mov	dptr,#_array
+   0023 75 F0 40      [24]  413 	mov	b,#0x40
+   0026 12r00r45      [24]  414 	lcall	_bubble_sort
+                            415 ;	sort.c:14: for(i = 0; i < 50; i++) {
+   0029 7E 00         [12]  416 	mov	r6,#0x00
+   002B 7F 00         [12]  417 	mov	r7,#0x00
+   002D                     418 00108$:
+                            419 ;	sort.c:15: P2 = array[i];
+   002D EE            [12]  420 	mov	a,r6
+   002E 24r00         [12]  421 	add	a,#_array
+   0030 F9            [12]  422 	mov	r1,a
+   0031 87 A0         [24]  423 	mov	_P2,@r1
+                            424 ;	sort.c:14: for(i = 0; i < 50; i++) {
+   0033 0E            [12]  425 	inc	r6
+   0034 BE 00 01      [24]  426 	cjne	r6,#0x00,00128$
+   0037 0F            [12]  427 	inc	r7
+   0038                     428 00128$:
+   0038 C3            [12]  429 	clr	c
+   0039 EE            [12]  430 	mov	a,r6
+   003A 94 32         [12]  431 	subb	a,#0x32
+   003C EF            [12]  432 	mov	a,r7
+   003D 64 80         [12]  433 	xrl	a,#0x80
+   003F 94 80         [12]  434 	subb	a,#0x80
+   0041 40 EA         [24]  435 	jc	00108$
+                            436 ;	sort.c:18: while(1);
+   0043                     437 00104$:
+   0043 80 FE         [24]  438 	sjmp	00104$
+                            439 ;------------------------------------------------------------
+                            440 ;Allocation info for local variables in function 'bubble_sort'
+                            441 ;------------------------------------------------------------
+                            442 ;n                         Allocated with name '_bubble_sort_PARM_2'
+                            443 ;list                      Allocated with name '_bubble_sort_list_1_5'
+                            444 ;c                         Allocated with name '_bubble_sort_c_1_6'
+                            445 ;d                         Allocated with name '_bubble_sort_d_1_6'
+                            446 ;t                         Allocated to registers 
+                            447 ;sloc0                     Allocated with name '_bubble_sort_sloc0_1_0'
+                            448 ;sloc1                     Allocated with name '_bubble_sort_sloc1_1_0'
+                            449 ;------------------------------------------------------------
+                            450 ;	sort.c:21: void bubble_sort(unsigned char* list, int n)
+                            451 ;	-----------------------------------------
+                            452 ;	 function bubble_sort
+                            453 ;	-----------------------------------------
+   0045                     454 _bubble_sort:
+   0045 85 82*02      [24]  455 	mov	_bubble_sort_list_1_5,dpl
+   0048 85 83*03      [24]  456 	mov	(_bubble_sort_list_1_5 + 1),dph
+   004B 85 F0*04      [24]  457 	mov	(_bubble_sort_list_1_5 + 2),b
+                            458 ;	sort.c:25: for (c = 0 ; c < ( n - 1 ); c++)
+   004E E5*00         [12]  459 	mov	a,_bubble_sort_PARM_2
+   0050 24 FF         [12]  460 	add	a,#0xFF
+   0052 FB            [12]  461 	mov	r3,a
+   0053 E5*01         [12]  462 	mov	a,(_bubble_sort_PARM_2 + 1)
+   0055 34 FF         [12]  463 	addc	a,#0xFF
+   0057 FC            [12]  464 	mov	r4,a
+   0058 75*05 00      [24]  465 	mov	_bubble_sort_c_1_6,#0x00
+   005B                     466 00109$:
+   005B A8*05         [24]  467 	mov	r0,_bubble_sort_c_1_6
+   005D 79 00         [12]  468 	mov	r1,#0x00
+   005F C3            [12]  469 	clr	c
+   0060 E8            [12]  470 	mov	a,r0
+   0061 9B            [12]  471 	subb	a,r3
+   0062 E9            [12]  472 	mov	a,r1
+   0063 64 80         [12]  473 	xrl	a,#0x80
+   0065 8C F0         [24]  474 	mov	b,r4
+   0067 63 F0 80      [24]  475 	xrl	b,#0x80
+   006A 95 F0         [12]  476 	subb	a,b
+   006C 40 01         [24]  477 	jc	00130$
+   006E 22            [24]  478 	ret
+   006F                     479 00130$:
+                            480 ;	sort.c:27: for (d = 0 ; d < n - c - 1; d++)
+   006F 75*06 00      [24]  481 	mov	_bubble_sort_d_1_6,#0x00
+   0072                     482 00106$:
+   0072 A8*05         [24]  483 	mov	r0,_bubble_sort_c_1_6
+   0074 7A 00         [12]  484 	mov	r2,#0x00
+   0076 E5*00         [12]  485 	mov	a,_bubble_sort_PARM_2
+   0078 C3            [12]  486 	clr	c
+   0079 98            [12]  487 	subb	a,r0
+   007A F8            [12]  488 	mov	r0,a
+   007B E5*01         [12]  489 	mov	a,(_bubble_sort_PARM_2 + 1)
+   007D 9A            [12]  490 	subb	a,r2
+   007E FA            [12]  491 	mov	r2,a
+   007F 18            [12]  492 	dec	r0
+   0080 B8 FF 01      [24]  493 	cjne	r0,#0xFF,00131$
+   0083 1A            [12]  494 	dec	r2
+   0084                     495 00131$:
+   0084 85*06*07      [24]  496 	mov	_bubble_sort_sloc0_1_0,_bubble_sort_d_1_6
+   0087 75*08 00      [24]  497 	mov	(_bubble_sort_sloc0_1_0 + 1),#0x00
+   008A C3            [12]  498 	clr	c
+   008B E5*07         [12]  499 	mov	a,_bubble_sort_sloc0_1_0
+   008D 98            [12]  500 	subb	a,r0
+   008E E5*08         [12]  501 	mov	a,(_bubble_sort_sloc0_1_0 + 1)
+   0090 64 80         [12]  502 	xrl	a,#0x80
+   0092 8A F0         [24]  503 	mov	b,r2
+   0094 63 F0 80      [24]  504 	xrl	b,#0x80
+   0097 95 F0         [12]  505 	subb	a,b
+   0099 50 74         [24]  506 	jnc	00110$
+                            507 ;	sort.c:29: if (list[d] > list[d+1])
+   009B E5*06         [12]  508 	mov	a,_bubble_sort_d_1_6
+   009D 25*02         [12]  509 	add	a,_bubble_sort_list_1_5
+   009F F5*09         [12]  510 	mov	_bubble_sort_sloc1_1_0,a
+   00A1 E4            [12]  511 	clr	a
+   00A2 35*03         [12]  512 	addc	a,(_bubble_sort_list_1_5 + 1)
+   00A4 F5*0A         [12]  513 	mov	(_bubble_sort_sloc1_1_0 + 1),a
+   00A6 85*04*0B      [24]  514 	mov	(_bubble_sort_sloc1_1_0 + 2),(_bubble_sort_list_1_5 + 2)
+   00A9 85*09 82      [24]  515 	mov	dpl,_bubble_sort_sloc1_1_0
+   00AC 85*0A 83      [24]  516 	mov	dph,(_bubble_sort_sloc1_1_0 + 1)
+   00AF 85*0B F0      [24]  517 	mov	b,(_bubble_sort_sloc1_1_0 + 2)
+   00B2 12r00r00      [24]  518 	lcall	__gptrget
+   00B5 FA            [12]  519 	mov	r2,a
+   00B6 74 01         [12]  520 	mov	a,#0x01
+   00B8 25*07         [12]  521 	add	a,_bubble_sort_sloc0_1_0
+   00BA F8            [12]  522 	mov	r0,a
+   00BB E4            [12]  523 	clr	a
+   00BC 35*08         [12]  524 	addc	a,(_bubble_sort_sloc0_1_0 + 1)
+   00BE F9            [12]  525 	mov	r1,a
+   00BF E8            [12]  526 	mov	a,r0
+   00C0 25*02         [12]  527 	add	a,_bubble_sort_list_1_5
+   00C2 F8            [12]  528 	mov	r0,a
+   00C3 E9            [12]  529 	mov	a,r1
+   00C4 35*03         [12]  530 	addc	a,(_bubble_sort_list_1_5 + 1)
+   00C6 F9            [12]  531 	mov	r1,a
+   00C7 AF*04         [24]  532 	mov	r7,(_bubble_sort_list_1_5 + 2)
+   00C9 88 82         [24]  533 	mov	dpl,r0
+   00CB 89 83         [24]  534 	mov	dph,r1
+   00CD 8F F0         [24]  535 	mov	b,r7
+   00CF 12r00r00      [24]  536 	lcall	__gptrget
+   00D2 F8            [12]  537 	mov	r0,a
+   00D3 C3            [12]  538 	clr	c
+   00D4 9A            [12]  539 	subb	a,r2
+   00D5 50 33         [24]  540 	jnc	00107$
+                            541 ;	sort.c:34: list[d]   = list[d+1];
+   00D7 74 01         [12]  542 	mov	a,#0x01
+   00D9 25*07         [12]  543 	add	a,_bubble_sort_sloc0_1_0
+   00DB FE            [12]  544 	mov	r6,a
+   00DC E4            [12]  545 	clr	a
+   00DD 35*08         [12]  546 	addc	a,(_bubble_sort_sloc0_1_0 + 1)
+   00DF FF            [12]  547 	mov	r7,a
+   00E0 EE            [12]  548 	mov	a,r6
+   00E1 25*02         [12]  549 	add	a,_bubble_sort_list_1_5
+   00E3 FE            [12]  550 	mov	r6,a
+   00E4 EF            [12]  551 	mov	a,r7
+   00E5 35*03         [12]  552 	addc	a,(_bubble_sort_list_1_5 + 1)
+   00E7 FF            [12]  553 	mov	r7,a
+   00E8 AD*04         [24]  554 	mov	r5,(_bubble_sort_list_1_5 + 2)
+   00EA 8E 82         [24]  555 	mov	dpl,r6
+   00EC 8F 83         [24]  556 	mov	dph,r7
+   00EE 8D F0         [24]  557 	mov	b,r5
+   00F0 12r00r00      [24]  558 	lcall	__gptrget
+   00F3 F9            [12]  559 	mov	r1,a
+   00F4 85*09 82      [24]  560 	mov	dpl,_bubble_sort_sloc1_1_0
+   00F7 85*0A 83      [24]  561 	mov	dph,(_bubble_sort_sloc1_1_0 + 1)
+   00FA 85*0B F0      [24]  562 	mov	b,(_bubble_sort_sloc1_1_0 + 2)
+   00FD 12r00r00      [24]  563 	lcall	__gptrput
+                            564 ;	sort.c:35: list[d+1] = t;
+   0100 8E 82         [24]  565 	mov	dpl,r6
+   0102 8F 83         [24]  566 	mov	dph,r7
+   0104 8D F0         [24]  567 	mov	b,r5
+   0106 EA            [12]  568 	mov	a,r2
+   0107 12r00r00      [24]  569 	lcall	__gptrput
+   010A                     570 00107$:
+                            571 ;	sort.c:27: for (d = 0 ; d < n - c - 1; d++)
+   010A 05*06         [12]  572 	inc	_bubble_sort_d_1_6
+   010C 02r00r72      [24]  573 	ljmp	00106$
+   010F                     574 00110$:
+                            575 ;	sort.c:25: for (c = 0 ; c < ( n - 1 ); c++)
+   010F 05*05         [12]  576 	inc	_bubble_sort_c_1_6
+   0111 02r00r5B      [24]  577 	ljmp	00109$
+                            578 	.area CSEG    (CODE)
+                            579 	.area CONST   (CODE)
+                            580 	.area XINIT   (CODE)
+                            581 	.area CABS    (ABS,CODE)

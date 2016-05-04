@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<step_instruction>0</step_instruction>
+	<exception_iret_sp>1</exception_iret_sp>
+	<exception_iret_acc>1</exception_iret_acc>
+	<exception_iret_psw>1</exception_iret_psw>
+	<exception_acc_to_a>1</exception_acc_to_a>
+	<exception_stack>1</exception_stack>
+	<exception_invalid>1</exception_invalid>
+	<iolowlow>1</iolowlow>
+	<iolowrand></iolowrand>
+	<clock>12000000</clock>
+</configure>

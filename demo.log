@@ -1,0 +1,725 @@
+Run Test ...
+SFRREAD 31 FROM 80
+SFRREAD 30 FROM 80
+SFRREAD 2F FROM 80
+SFRREAD 2E FROM 80
+SFRREAD 2D FROM 80
+SFRREAD 2C FROM 80
+SFRREAD D FROM 80
+SFRREAD 5 FROM 80
+SFRREAD 29 FROM 80
+SFRREAD 28 FROM 80
+SFRREAD 27 FROM 80
+SFRREAD 26 FROM 80
+SFRREAD 25 FROM 80
+SFRREAD 24 FROM 80
+SFRREAD 23 FROM 80
+SFRREAD 22 FROM 80
+SFRREAD 21 FROM 80
+SFRREAD 20 FROM 80
+SFRREAD 1F FROM 80
+SFRREAD 1E FROM 80
+SFRREAD 1D FROM 80
+SFRREAD 1C FROM 80
+SFRREAD 1B FROM 80
+SFRREAD 1A FROM 80
+SFRREAD 19 FROM 80
+SFRREAD 18 FROM 80
+SFRREAD 17 FROM 80
+SFRREAD 16 FROM 80
+SFRREAD 15 FROM 80
+SFRREAD 14 FROM 80
+SFRREAD 13 FROM 80
+SFRREAD 12 FROM 80
+SFRREAD 11 FROM 80
+SFRREAD 10 FROM 80
+SFRREAD F FROM 80
+SFRREAD E FROM 80
+SFRREAD D FROM 80
+SFRREAD C FROM 80
+SFRREAD B FROM 80
+SFRREAD A FROM 80
+SFRREAD 9 FROM 80
+SFRREAD 8 FROM 80
+SFRREAD 7 FROM 80
+SFRREAD 6 FROM 80
+SFRREAD 5 FROM 80
+SFRREAD 4 FROM 80
+SFRREAD 3 FROM 80
+SFRREAD 2 FROM 80
+SFRREAD 1 FROM 80
+SFRREAD 0 FROM 80
+SFRWRITE 0 TO A0
+SFRWRITE 1 TO A0
+SFRWRITE 2 TO A0
+SFRWRITE 3 TO A0
+SFRWRITE 4 TO A0
+SFRWRITE 5 TO A0
+SFRWRITE 5 TO A0
+SFRWRITE 6 TO A0
+SFRWRITE 7 TO A0
+SFRWRITE 8 TO A0
+SFRWRITE 9 TO A0
+SFRWRITE A TO A0
+SFRWRITE B TO A0
+SFRWRITE C TO A0
+SFRWRITE D TO A0
+SFRWRITE D TO A0
+SFRWRITE E TO A0
+SFRWRITE F TO A0
+SFRWRITE 10 TO A0
+SFRWRITE 11 TO A0
+SFRWRITE 12 TO A0
+SFRWRITE 13 TO A0
+SFRWRITE 14 TO A0
+SFRWRITE 15 TO A0
+SFRWRITE 16 TO A0
+SFRWRITE 17 TO A0
+SFRWRITE 18 TO A0
+SFRWRITE 19 TO A0
+SFRWRITE 1A TO A0
+SFRWRITE 1B TO A0
+SFRWRITE 1C TO A0
+SFRWRITE 1D TO A0
+SFRWRITE 1E TO A0
+SFRWRITE 1F TO A0
+SFRWRITE 20 TO A0
+SFRWRITE 21 TO A0
+SFRWRITE 22 TO A0
+SFRWRITE 23 TO A0
+SFRWRITE 24 TO A0
+SFRWRITE 25 TO A0
+SFRWRITE 26 TO A0
+SFRWRITE 27 TO A0
+SFRWRITE 28 TO A0
+SFRWRITE 29 TO A0
+SFRWRITE 2C TO A0
+SFRWRITE 2D TO A0
+SFRWRITE 2E TO A0
+SFRWRITE 2F TO A0
+SFRWRITE 30 TO A0
+SFRWRITE 31 TO A0
+[31mFail[0m
+0     LJMP  #0006h
+--------------Executed!
+1     NOP
+2     INC   @R0
+3     LJMP  #0062h
+--------------Executed!
+4     NOP
+5     XRL   75h, A
+6     MOV   SP, #45h
+--------------Executed!
+7     AJMP  #0445h
+8     ORL   A, 12h
+9     LCALL #01ADh
+--------------Executed!
+10    AJMP  #00ADh
+11    MOV   R5, E5h
+12    MOV   A, DPL
+--------------Executed!
+13    ANL   C, 0Ch.0
+14    JZ    #+3
+--------------Executed!
+15    RR    A
+16    LJMP  #0003h
+17    NOP
+18    RR    A
+19    MOV   R1, #00h
+--------------Executed!
+20    NOP
+21    MOV   A, R1
+--------------Executed!
+22    ORL   A, #00h
+--------------Executed!
+23    NOP
+24    JZ    #+27
+--------------Executed!
+25    DEC   R3
+26    MOV   R2, #00h
+27    NOP
+28    MOV   DPTR, #001B1h
+29    AJMP  #00B1h
+30    ACALL 0578h
+31    MOV   R0, #00h
+32    NOP
+33    MOV   P2, #00h
+34    ORL   C, /00h.0
+35    NOP
+36    CLR   A
+37    MOVC  A, @A+DPTR
+38    MOVX  @R0, A
+39    INC   DPTR
+40    INC   R0
+41    CJNE  R0, #00h, #+2
+42    NOP
+43    LJMP  #05A0h
+44    INC   P2
+45    ORL   C, /D8h.1
+46    DJNZ  R1, #-12
+47    CPL   A
+48    DJNZ  R2, #-14
+49    MOVX  @R0, A
+50    MOV   P2, #FFh
+51    ORL   C, /F8h.7
+52    MOV   R7, A
+53    CLR   A
+--------------Executed!
+54    MOV   R0, #FFh
+--------------Executed!
+55    MOV   R7, A
+56    MOV   @R0, A
+--------------Executed!
+57    DJNZ  R0, #-3
+--------------Executed!
+58    MOV   R5, A
+59    MOV   R0, #00h
+--------------Executed!
+60    NOP
+61    MOV   A, R0
+--------------Executed!
+62    ORL   A, #00h
+--------------Executed!
+63    NOP
+64    JZ    #+10
+--------------Executed!
+65    INC   R2
+66    MOV   R1, #00h
+67    NOP
+68    MOV   P2, #00h
+69    ORL   C, /00h.0
+70    NOP
+71    CLR   A
+72    MOVX  @R1, A
+73    INC   R1
+74    DJNZ  R0, #-4
+75    MOV   R4, A
+76    MOV   R0, #00h
+--------------Executed!
+77    NOP
+78    MOV   A, R0
+--------------Executed!
+79    ORL   A, #00h
+--------------Executed!
+80    NOP
+81    JZ    #+12
+--------------Executed!
+82    INC   R4
+83    MOV   R1, #00h
+84    NOP
+85    MOV   DPTR, #00000h
+86    NOP
+87    NOP
+88    CLR   A
+89    MOVX  @DPTR, A
+90    INC   DPTR
+91    DJNZ  R0, #-4
+92    MOV   R4, A
+93    DJNZ  R1, #-6
+94    MOV   R2, A
+95    LJMP  #0003h
+--------------Executed!
+96    NOP
+97    RR    A
+98    MOV   R6, #00h
+--------------Executed!
+99    NOP
+100   MOV   R7, #00h
+--------------Executed!
+101   NOP
+102   MOV   A, R6
+--------------Executed!
+103   ADD   A, #08h
+--------------Executed!
+104   INC   R0
+105   MOV   R0, A
+--------------Executed!
+106   MOV   @R0, P0
+--------------Executed!
+107   SJMP  #+14
+108   INC   R6
+--------------Executed!
+109   CJNE  R6, #00h, #+1
+--------------Executed!
+110   NOP
+111   AJMP  #000Fh
+112   INC   R7
+113   CLR   C
+--------------Executed!
+114   MOV   A, R6
+--------------Executed!
+115   SUBB  A, #32h
+--------------Executed!
+116   RETI
+117   MOV   A, R7
+--------------Executed!
+118   XRL   A, #80h
+--------------Executed!
+119   SJMP  #-108
+120   SUBB  A, #80h
+--------------Executed!
+121   SJMP  #+64
+122   JC    #-22
+--------------Executed!
+123   MOV   A, R2
+124   MOV   3Ah, #32h
+--------------Executed!
+125   ADDC  A, R2
+126   RETI
+127   MOV   3Bh, #00h
+--------------Executed!
+128   ADDC  A, R3
+129   NOP
+130   MOV   DPTR, #00008h
+--------------Executed!
+131   NOP
+132   INC   R0
+133   MOV   B, #40h
+--------------Executed!
+134   MOVX  @DPTR, A
+135   JC    #+18
+136   LCALL #00A7h
+--------------Executed!
+137   NOP
+138   MOV   @R1, 7Eh
+139   MOV   R6, #00h
+--------------Executed!
+140   NOP
+141   MOV   R7, #00h
+--------------Executed!
+142   NOP
+143   MOV   A, R6
+--------------Executed!
+144   ADD   A, #08h
+--------------Executed!
+145   INC   R0
+146   MOV   R1, A
+--------------Executed!
+147   MOV   P2, @R1
+--------------Executed!
+148   ORL   C, /01h.6
+149   INC   R6
+--------------Executed!
+150   CJNE  R6, #00h, #+1
+--------------Executed!
+151   NOP
+152   AJMP  #000Fh
+153   INC   R7
+154   CLR   C
+--------------Executed!
+155   MOV   A, R6
+--------------Executed!
+156   SUBB  A, #32h
+--------------Executed!
+157   RETI
+158   MOV   A, R7
+--------------Executed!
+159   XRL   A, #80h
+--------------Executed!
+160   SJMP  #-108
+161   SUBB  A, #80h
+--------------Executed!
+162   SJMP  #+64
+163   JC    #-22
+--------------Executed!
+164   MOV   A, R2
+165   SJMP  #-2
+--------------Executed!
+166   MOV   R6, A
+167   MOV   3Ch, DPL
+--------------Executed!
+168   ANL   C, 07h.4
+169   ADDC  A, R4
+170   MOV   3Dh, DPH
+--------------Executed!
+171   MOVC  A, @A+PC
+172   ADDC  A, R5
+173   MOV   3Eh, B
+--------------Executed!
+174   MOVX  @DPTR, A
+175   ADDC  A, R6
+176   MOV   A, 3Ah
+--------------Executed!
+177   ADDC  A, R2
+178   ADD   A, #FFh
+--------------Executed!
+179   MOV   R7, A
+180   MOV   R3, A
+--------------Executed!
+181   MOV   A, 3Bh
+--------------Executed!
+182   ADDC  A, R3
+183   ADDC  A, #FFh
+--------------Executed!
+184   MOV   R7, A
+185   MOV   R4, A
+--------------Executed!
+186   MOV   3Fh, #00h
+--------------Executed!
+187   ADDC  A, R7
+188   NOP
+189   MOV   R0, 3Fh
+--------------Executed!
+190   ADDC  A, R7
+191   MOV   R1, #00h
+--------------Executed!
+192   NOP
+193   CLR   C
+--------------Executed!
+194   MOV   A, R0
+--------------Executed!
+195   SUBB  A, R3
+--------------Executed!
+196   MOV   A, R1
+--------------Executed!
+197   XRL   A, #80h
+--------------Executed!
+198   SJMP  #-116
+199   MOV   B, R4
+--------------Executed!
+200   MOVX  @DPTR, A
+201   XRL   B, #80h
+--------------Executed!
+202   MOVX  @DPTR, A
+203   SJMP  #-107
+204   SUBB  A, B
+--------------Executed!
+205   MOVX  @DPTR, A
+206   JC    #+1
+--------------Executed!
+207   AJMP  #0022h
+208   RET
+--------------Executed!
+209   MOV   40h, #00h
+--------------Executed!
+210   JC    #+0
+211   NOP
+212   MOV   R0, 3Fh
+--------------Executed!
+213   ADDC  A, R7
+214   MOV   R2, #00h
+--------------Executed!
+215   NOP
+216   MOV   A, 3Ah
+--------------Executed!
+217   ADDC  A, R2
+218   CLR   C
+--------------Executed!
+219   SUBB  A, R0
+--------------Executed!
+220   MOV   R0, A
+--------------Executed!
+221   MOV   A, 3Bh
+--------------Executed!
+222   ADDC  A, R3
+223   SUBB  A, R2
+--------------Executed!
+224   MOV   R2, A
+--------------Executed!
+225   DEC   R0
+--------------Executed!
+226   CJNE  R0, #FFh, #+1
+--------------Executed!
+227   MOV   R7, A
+228   AJMP  #001Ah
+229   DEC   R2
+230   MOV   41h, 40h
+--------------Executed!
+231   JC    #+65
+232   AJMP  #0275h
+233   MOV   42h, #00h
+--------------Executed!
+234   ORL   00h, A
+235   NOP
+236   CLR   C
+--------------Executed!
+237   MOV   A, 41h
+--------------Executed!
+238   AJMP  #0298h
+239   SUBB  A, R0
+--------------Executed!
+240   MOV   A, 42h
+--------------Executed!
+241   ORL   64h, A
+242   XRL   A, #80h
+--------------Executed!
+243   SJMP  #-118
+244   MOV   B, R2
+--------------Executed!
+245   MOVX  @DPTR, A
+246   XRL   B, #80h
+--------------Executed!
+247   MOVX  @DPTR, A
+248   SJMP  #-107
+249   SUBB  A, B
+--------------Executed!
+250   MOVX  @DPTR, A
+251   JNC   #+116
+--------------Executed!
+252   MOV   A, #E5h
+253   MOV   A, 40h
+--------------Executed!
+254   JC    #+37
+255   ADD   A, 3Ch
+--------------Executed!
+256   ADDC  A, R4
+257   MOV   43h, A
+--------------Executed!
+258   ORL   E4h, #35h
+259   CLR   A
+--------------Executed!
+260   ADDC  A, 3Dh
+--------------Executed!
+261   ADDC  A, R5
+262   MOV   44h, A
+--------------Executed!
+263   ORL   A, #85h
+264   MOV   45h, 3Eh
+--------------Executed!
+265   ADDC  A, R6
+266   ORL   A, 85h
+267   MOV   DPL, 43h
+--------------Executed!
+268   ORL   DPL, #85h
+269   ANL   C, P0.5
+270   MOV   DPH, 44h
+--------------Executed!
+271   ORL   A, #83h
+272   MOVC  A, @A+PC
+273   MOV   B, 45h
+--------------Executed!
+274   ORL   A, B
+275   MOVX  @DPTR, A
+276   LCALL #0191h
+--------------Executed!
+277   AJMP  #0091h
+278   ACALL 04FAh
+279   MOV   R2, A
+--------------Executed!
+280   MOV   A, #01h
+--------------Executed!
+281   AJMP  #0025h
+282   ADD   A, 41h
+--------------Executed!
+283   AJMP  #02F8h
+284   MOV   R0, A
+--------------Executed!
+285   CLR   A
+--------------Executed!
+286   ADDC  A, 42h
+--------------Executed!
+287   ORL   F9h, A
+288   MOV   R1, A
+--------------Executed!
+289   MOV   A, R0
+--------------Executed!
+290   ADD   A, 3Ch
+--------------Executed!
+291   ADDC  A, R4
+292   MOV   R0, A
+--------------Executed!
+293   MOV   A, R1
+--------------Executed!
+294   ADDC  A, 3Dh
+--------------Executed!
+295   ADDC  A, R5
+296   MOV   R1, A
+--------------Executed!
+297   MOV   R7, 3Eh
+--------------Executed!
+298   ADDC  A, R6
+299   MOV   DPL, R0
+--------------Executed!
+300   ANL   C, TCON.1
+301   MOV   DPH, R1
+--------------Executed!
+302   MOVC  A, @A+PC
+303   MOV   B, R7
+--------------Executed!
+304   MOVX  @DPTR, A
+305   LCALL #0191h
+--------------Executed!
+306   AJMP  #0091h
+307   ACALL 04F8h
+308   MOV   R0, A
+--------------Executed!
+309   CLR   C
+--------------Executed!
+310   SUBB  A, R2
+--------------Executed!
+311   JNC   #+51
+--------------Executed!
+312   RLC   A
+313   MOV   A, #01h
+--------------Executed!
+314   AJMP  #0025h
+315   ADD   A, 41h
+--------------Executed!
+316   AJMP  #02FEh
+317   MOV   R6, A
+--------------Executed!
+318   CLR   A
+--------------Executed!
+319   ADDC  A, 42h
+--------------Executed!
+320   ORL   FFh, A
+321   MOV   R7, A
+--------------Executed!
+322   MOV   A, R6
+--------------Executed!
+323   ADD   A, 3Ch
+--------------Executed!
+324   ADDC  A, R4
+325   MOV   R6, A
+--------------Executed!
+326   MOV   A, R7
+--------------Executed!
+327   ADDC  A, 3Dh
+--------------Executed!
+328   ADDC  A, R5
+329   MOV   R7, A
+--------------Executed!
+330   MOV   R5, 3Eh
+--------------Executed!
+331   ADDC  A, R6
+332   MOV   DPL, R6
+--------------Executed!
+333   ANL   C, TCON.7
+334   MOV   DPH, R7
+--------------Executed!
+335   MOVC  A, @A+PC
+336   MOV   B, R5
+--------------Executed!
+337   MOVX  @DPTR, A
+338   LCALL #0191h
+--------------Executed!
+339   AJMP  #0091h
+340   ACALL 04F9h
+341   MOV   R1, A
+--------------Executed!
+342   MOV   DPL, 43h
+--------------Executed!
+343   ORL   DPL, #85h
+344   ANL   C, P0.5
+345   MOV   DPH, 44h
+--------------Executed!
+346   ORL   A, #83h
+347   MOVC  A, @A+PC
+348   MOV   B, 45h
+--------------Executed!
+349   ORL   A, B
+350   MOVX  @DPTR, A
+351   LCALL #0176h
+--------------Executed!
+352   AJMP  #0076h
+353   MOV   @R0, #8Eh
+354   MOV   DPL, R6
+--------------Executed!
+355   ANL   C, TCON.7
+356   MOV   DPH, R7
+--------------Executed!
+357   MOVC  A, @A+PC
+358   MOV   B, R5
+--------------Executed!
+359   MOVX  @DPTR, A
+360   MOV   A, R2
+--------------Executed!
+361   LCALL #0176h
+--------------Executed!
+362   AJMP  #0076h
+363   MOV   @R0, #05h
+364   INC   40h
+--------------Executed!
+365   JC    #+2
+366   LJMP  #00D4h
+--------------Executed!
+367   NOP
+368   DA    A
+369   INC   3Fh
+--------------Executed!
+370   ADDC  A, R7
+371   LJMP  #00BDh
+--------------Executed!
+372   NOP
+373   CJNE  R5, #20h, #-9
+374   JB   B.7, #+17
+--------------Executed!
+375   MOV   @R1, A
+376   ACALL 0030h
+377   JNB   B.6, #+19
+--------------Executed!
+378   MOV   @R0, A
+379   RRC   A
+380   MOV   DPH, R0
+--------------Executed!
+381   MOVC  A, @A+PC
+382   MOV   R0, DPL
+--------------Executed!
+383   ANL   C, 04h.0
+384   JB   B.5, #+9
+--------------Executed!
+385   MOV   09h, A
+386   INC   R1
+387   MOV   @R0, A
+--------------Executed!
+388   MOV   R0, DPH
+--------------Executed!
+389   MOVC  A, @A+PC
+390   MOV   DPH, #00h
+--------------Executed!
+391   MOVC  A, @A+PC
+392   NOP
+393   RET
+--------------Executed!
+394   SJMP  #-2
+395   MOV   R6, A
+396   MOVX  @R0, A
+397   SJMP  #-11
+398   MOV   B, A
+399   MOVX  @DPTR, A
+400   RET
+401   JB   B.7, #+20
+--------------Executed!
+402   MOV   @R1, A
+403   DEC   A
+404   JNB   B.6, #+20
+--------------Executed!
+405   MOV   @R0, A
+406   DEC   A
+407   MOV   DPH, R0
+--------------Executed!
+408   MOVC  A, @A+PC
+409   MOV   R0, DPL
+--------------Executed!
+410   ANL   C, 04h.0
+411   JB   B.5, #+7
+--------------Executed!
+412   MOV   07h, A
+413   INC   @R1
+414   MOV   A, @R0
+--------------Executed!
+415   MOV   R0, DPH
+--------------Executed!
+416   MOVC  A, @A+PC
+417   MOV   DPH, #00h
+--------------Executed!
+418   MOVC  A, @A+PC
+419   NOP
+420   RET
+--------------Executed!
+421   MOVX  A, @R0
+422   SJMP  #-9
+423   MOV   @R1, A
+424   CLR   A
+425   MOVC  A, @A+DPTR
+426   RET
+427   MOVX  A, @DPTR
+428   RET
+429   MOV   DPL, #00h
+--------------Executed!
+430   ANL   C, 00h.0
+431   NOP
+432   RET
+--------------Executed!
+Coverage:43%
+Finish Test ...

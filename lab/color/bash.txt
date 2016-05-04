@@ -1,0 +1,3 @@
+http://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+
+echo -e "\x1B[0;32mH e l l o \x1b[mG o o d-b y e"

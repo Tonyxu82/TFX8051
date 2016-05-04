@@ -1,0 +1,10 @@
+llvm-gcc -emit-llvm -c -g test_sign.c 
+llvm-gcc -emit-llvm -c -g get_sign.c 
+
+llvm-link get_sign.o test_sign.o -o test.o
+
+CFLAGS = -Wall -Wextra -emit-llvm -S
+
+llvm-gcc -emit-llvm -c -g -S test_sign.c 
+llvm-gcc -emit-llvm -c -g -S get_sign.c 
+

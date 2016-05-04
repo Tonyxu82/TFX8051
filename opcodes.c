@@ -44,6 +44,7 @@
 
 static int read_mem(struct em8051 *aCPU, int aAddress)
 {
+
     if (aAddress > 0x7f)
     {
         if (aCPU->sfrread)

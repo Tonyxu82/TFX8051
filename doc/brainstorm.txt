@@ -1,0 +1,52 @@
+Design Format of IR File:
+
+
+
+sfrread
+except
+sfrwrite
+
+-----------------------
+op_setptrs
+int do_op(struct em8051 *aCPU)
+
+
+
+1. Lightweight Development and Performance
+2. Parallizing the algorithm
+
+Divided into sub-search space.
+
+S2E
+SMRAM
+How to handle loop, setting new value
+
+
+
+Meeting Minutes
+--------------------------------
+1. OpenCores.org 8051
+
+
+
+	char strBuf[256];
+	memset(strBuf, 0, sizeof(char)*256);
+	FILE* fp = fopen("dump.dat", "r");
+	if(NULL == fp){
+		return -2;                    
+	}
+
+	p_dump->current_fp = fopen(p_dump->file_name, "w");
+	
+	if(NULL == p_dump->current_fp){
+		return -2;
+	}
+
+	p_dump->dump_enable = 1;
+
+
+	while(fgets(strBuf, sizeof(strBuf), fp)){
+		fputs(strBuf, p_dump->current_fp);
+	}
+
+	fclose(fp);

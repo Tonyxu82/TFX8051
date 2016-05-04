@@ -1,0 +1,5 @@
+http://www.slideshare.net/GauravVerma3/embedded-c-for-8051-compatibility-mode
+
+http://www.8051projects.info/
+
+http://forum.allaboutcircuits.com/threads/need-urgent-help-initialize-ports-on-8051-microcontroller.21541/

@@ -26,6 +26,9 @@
  * Emulator core header file
  */
 
+#ifndef _EMU8051_H_
+#define _EMU8051_H_
+
 struct em8051;
 
 // Operation: returns number of ticks the operation should take
@@ -56,11 +59,12 @@ typedef void (*em8051xwrite)(struct em8051 *aCPU, int aAddress, int aValue);
 // (can be used to control some peripherals)
 typedef int (*em8051xread)(struct em8051 *aCPU, int aAddress);
 
-
+typedef struct em8051 core_8051;
 struct em8051
 {
     unsigned char *mCodeMem; // 1k - 64k, must be power of 2
-    int mCodeMemSize; 
+    int* mCodeCov;
+    int mCodeMemSize;
     unsigned char *mExtData; // 0 - 64k, must be power of 2
     int mExtDataSize;
     unsigned char *mLowerData; // 128 bytes
@@ -96,7 +100,7 @@ int tick(struct em8051 *aCPU);
 // decode the next operation as character string.
 // buffer must be big enough (64 bytes is very safe). 
 // Returns length of opcode.
-int decode(struct em8051 *aCPU, int aPosition, unsigned char *aBuffer);
+int decode(struct em8051 *aCPU, int aPosition, char *aBuffer);
 
 // Load an intel hex format object file. Returns negative for errors.
 int load_obj(struct em8051 *aCPU, char *aFilename);
@@ -107,6 +111,10 @@ int do_op(struct em8051 *aCPU);
 // Internal: Pushes a value into stack
 void push_to_stack(struct em8051 *aCPU, int aValue);
 
+
+int core_sleep(int value);
+
+int getTick();
 
 // SFR register locations
 enum SFR_REGS
@@ -225,3 +233,4 @@ enum EM8051_EXCEPTION
     EXCEPTION_ILLEGAL_OPCODE     // for the single 'reserved' opcode in the architecture
 };
 
+#endif //_EMU8051_H_

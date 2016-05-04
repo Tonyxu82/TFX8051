@@ -1,0 +1,64 @@
+[DEMO]
+1. Open Keil C51 and MCU 8051 IDE
+
+2. Run Emulator and Load test3.hex
+
+3. Setting Harness
+   1) Enable including "klee.h"
+   2) Adding a printf in mov_mem_a to show the result
+      2095 mov_mem_a
+           printf("%c\n", aCPU->mSFR[address - 0x80]);
+   3) make input to symbolic
+
+	3746 mov_a_imm
+
+
+	int mov_a_imm(struct em8051 *aCPU)
+	{
+	    ACC = OPERAND1;
+	    PC += 2;
+	    return 0;
+	}
+
+	int mov_a_imm_symbo(struct em8051 *aCPU)
+	{
+	    unsigned char im = OPERAND1;
+	    klee_make_symbolic(&im, sizeof(im), "im");
+	    ACC = im;
+	    PC += 2;
+	    return 0;
+	}
+
+3. Compiling trace to LLVM IR
+clang-3.4 -I/home/tonyxu/Project/klee/klee/include/klee -emit-llvm -g -c dump_00011.c 
+
+If in Desktop of Office
+clang-3.4 -I/home/tonyxu/Project/klee/include/klee -emit-llvm -g -c goto.c
+
+*You also can trace to executable file
+gcc -g dump_00001.c -o test
+
+4. Run KLEE
+klee ./dump_00001.bc
+
+5. Checking Test Cases
+ktest-tool --write-ints klee-last/test000001.ktest 
+
+6. Replay Testt Case
+export LD_LIBRARY_PATH=/home/tonyxu/Project/klee/klee/Release+Asserts/lib:$LD_LIBRARY_PATH
+
+gcc -I/home/tonyxu/Project/klee/klee/include/klee -L /home/tonyxu/Project/klee/klee/Release+Asserts/lib dump_00001.c -lkleeRuntest
+
+KTEST_FILE=klee-last/test000001.ktest ./a.out 
+
+echo $?
+
+7. Coverage
+klee-stats klee-last
+
+8. Feed test case back to 8051 emulator
+./emu klee-last/test000001.ktest
+
+
+
+

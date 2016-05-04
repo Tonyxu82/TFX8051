@@ -35,32 +35,6 @@
 
 static int activerow = 0;
 
-int opt_exception_iret_sp = 1;
-int opt_exception_iret_acc = 1;
-int opt_exception_iret_psw = 1;
-int opt_exception_acc_to_a = 1;
-int opt_exception_stack = 1;
-int opt_exception_invalid = 1;
-int opt_input_outputlow = 1;
-int opt_clock_select = 3;
-int opt_clock_hz = 12*1000*1000;
-int opt_step_instruction = 0;
-
-int clockspeeds[] = { 
-    33*1000*1000,
-    24*1000*1000, 
-    22*1000*1000, 
-    12*1000*1000, 
-    11*1000*1000, 
-       73728*100,
-     6*1000*1000,
-     5*1000*1000,
-       49152*100,
-     3*1000*1000,
-       1000*1000,
-        100*1000
-};
-
 void wipe_options_view()
 {
 }

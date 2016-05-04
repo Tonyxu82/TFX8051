@@ -1,5 +1,5 @@
 /* 8051 emulator 
- * Copyright 2006 Jari Komppa
+ * Copyright 2006 Jari Komppa, Lai Xu(Tony)
  *
  * Permission is hereby granted, free of charge, to any person obtaining 
  * a copy of this software and associated documentation files (the 
@@ -22,11 +22,14 @@
  *
  * (i.e. the MIT License)
  *
- * emu.c
+ * emulator.h
  * Curses-based emulator front-end
  */
 
 // how many lines of history to remember
+#ifndef _EMULATOR_H_
+#define _EMULATOR_H_
+
 #define HISTORY_LINES 20
 
 enum EMU_VIEWS
@@ -34,7 +37,8 @@ enum EMU_VIEWS
     MAIN_VIEW = 0,
     MEMEDITOR_VIEW = 1,
     LOGICBOARD_VIEW = 2,
-    OPTIONS_VIEW = 3
+    OPTIONS_VIEW = 3,
+    TEST_VIEW = 4
 };
 
 
@@ -68,18 +72,6 @@ extern int p3out;
 // current clock count
 unsigned int clocks;
 
-int opt_exception_iret_sp;
-int opt_exception_iret_acc;
-int opt_exception_iret_psw;
-int opt_exception_acc_to_a;
-int opt_exception_stack;
-int opt_exception_invalid;
-int opt_clock_select;
-int opt_clock_hz;
-int opt_step_instruction;
-int opt_input_outputlow;
-
-
 
 // emu.c
 extern int getTick();
@@ -103,7 +95,7 @@ extern void build_main_view(struct em8051 *aCPU);
 extern void wipe_main_view();
 extern void mainview_update(struct em8051 *aCPU);
 
-// logicboard.c
+//logicboard.c
 extern void wipe_logicboard_view();
 extern void build_logicboard_view(struct em8051 *aCPU);
 extern void logicboard_editor_keys(struct em8051 *aCPU, int ch);
@@ -122,6 +114,6 @@ extern void build_options_view(struct em8051 *aCPU);
 extern void options_editor_keys(struct em8051 *aCPU, int ch);
 extern void options_update(struct em8051 *aCPU);
 
-
+#endif //_EMULATOR_H_
 
 

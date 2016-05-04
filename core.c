@@ -29,7 +29,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/time.h>
 #include "emu8051.h"
+
+int getTick()
+{
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return now.tv_sec * 1000 + now.tv_usec / 1000;
+}
+
+int core_sleep(int value){
+    usleep(value * 1000);
+}
 
 static void timer_tick(struct em8051 *aCPU)
 {
@@ -439,7 +452,7 @@ int tick(struct em8051 *aCPU)
     return ticked;
 }
 
-int decode(struct em8051 *aCPU, int aPosition, unsigned char *aBuffer)
+int decode(struct em8051 *aCPU, int aPosition, char *aBuffer)
 {
     return aCPU->dec[aCPU->mCodeMem[aPosition & (aCPU->mCodeMemSize - 1)]](aCPU, aPosition, aBuffer);
 }
@@ -522,6 +535,9 @@ int load_obj(struct em8051 *aCPU, char *aFilename)
             int data = readbyte(f);
             checksum += data;
             aCPU->mCodeMem[address + i] = data;
+            if(aCPU->mCodeCov){
+                aCPU->mCodeCov[address + i] = 0;
+            }
         }
         i = readbyte(f);
         checksum &= 0xff;
