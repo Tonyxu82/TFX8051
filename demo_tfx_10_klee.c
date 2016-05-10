@@ -33,7 +33,7 @@ int clockspeeds[] = {
 };
 
 
-test*  cur_test = NULL;
+test* cur_test = NULL;
 core_8051* cur_core = NULL;
 
 #define TFX_P0 (REG_P0+0x80)

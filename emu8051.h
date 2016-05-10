@@ -64,6 +64,7 @@ struct em8051
 {
     unsigned char *mCodeMem; // 1k - 64k, must be power of 2
     int* mCodeCov;
+    int mCodeCovTotalIns;
     int mCodeMemSize;
     unsigned char *mExtData; // 0 - 64k, must be power of 2
     int mExtDataSize;

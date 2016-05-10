@@ -28,14 +28,6 @@
 
 #include "tfx_coverage.h"
 
-#define COV_FILE_NAME_SIZE 50
-
-typedef struct static_unit static_unit;
-struct static_unit{
-	int pc;
-	int stat;
-};
-
 void begin_coverage(char* fw_name, core_8051* core){
 	
 	if(!core->mCodeCov) return;
@@ -61,7 +53,6 @@ void end_coverage(char* fw_name, core_8051* core){
 
 	char cov_file[COV_FILE_NAME_SIZE];
 	static_unit su;
-	int pc_total=0;
 	int pc_exe  =0;
 
 	sprintf(cov_file, "%s.cov", fw_name);
@@ -70,21 +61,18 @@ void end_coverage(char* fw_name, core_8051* core){
 	if(!fp) return;
 
 	for(int i=0; i<core->mCodeMemSize; i++){
-		if(core->mCodeCov[i] > -1){
-			decode(core, i, assembly);
-			printf("%-5d %s\n",i, assembly);
+		if(core->mCodeCov[i] > 0){
 			su.pc = i;
 			su.stat = core->mCodeCov[i];
 			fwrite(&su, sizeof(static_unit), 1, fp);
 
-			pc_total++;
-			if(su.stat>0){
-				printf("--------------Executed!\n");
-				pc_exe++;
-			}
+			pc_exe++;
 		}
 	}
 
-	printf("Coverage:%d%%\n",pc_exe*100/pc_total);
+	if(core->mCodeCovTotalIns>0)
+		printf("Coverage:%d%%\n",pc_exe*100/core->mCodeCovTotalIns);
+	else
+		printf("Coverage Analyze Error\n");
 
 }

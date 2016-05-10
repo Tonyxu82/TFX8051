@@ -3,7 +3,7 @@ gcc ut_tfx_io.c tfx_test.c tfx_io.c -std=c99 -o ut
 gcc twister.c -DNOCOMPILE -o twister
 
 [DEMO of TFX]
-gcc demo_tfx_10.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.ct-std=c99 -D_BSD_SOURCE -o demo10
+gcc demo_tfx_10.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c tfx_coverage.c -std=c99 -D_BSD_SOURCE -o demo10
 
 ./demo10 sort.hex
 
@@ -83,5 +83,9 @@ gcc ut_tfx_test_klee.c tfx_test.c core.c opcodes.c disasm.c -std=c99 -D_BSD_SOUR
 KTEST_FILE=klee-last/test000001.ktest ./all
 
 //Replay Trace
+
+
+[TFX_Analyzer]
+gcc tfx_analyzer.c core.c opcodes.c disasm.c -lcurses -std=c99 -D_BSD_SOURCE -o analyzer
 
 

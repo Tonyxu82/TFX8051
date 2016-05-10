@@ -32,6 +32,14 @@
 #include <stdio.h>
 #include "emu8051.h"
 
+#define COV_FILE_NAME_SIZE 50
+ 
+typedef struct static_unit static_unit;
+struct static_unit{
+	int pc;
+	int stat;
+};
+
 void begin_coverage(char* fw_name, core_8051* core);
 
 void end_coverage(char* fw_name, core_8051* core);

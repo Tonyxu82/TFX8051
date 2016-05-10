@@ -31,8 +31,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include "emu8051.h"
+#include "tfx_coverage.h"
+
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
+#define RESET "\033[0m"
 
 int enable_coverage = 1;
+int total_ins = 0;
+int exe_ins = 0;
 
 //8051 Core
 core_8051* cur_core = NULL;
@@ -89,12 +102,33 @@ void delete_core(core_8051* core){
   core = NULL;
 }
 
-int load_fw(core_8051* core, char *fw)
+int coverage(core_8051* core, char *fw)
 {
-    FILE *f;    
-    char assembly[128];
     if (fw == 0 || fw[0] == 0)
         return -1;
+
+    //Load Coverage data
+    static_unit su;
+
+    char cov_file[COV_FILE_NAME_SIZE];
+    sprintf(cov_file, "%s.cov", fw);
+    
+    FILE* fp = fopen(cov_file, "rb");
+    if(!fp) return -1;
+
+    while(fread(&su, sizeof(static_unit), 1, fp)){
+      core->mCodeCov[su.pc] = su.stat;
+      exe_ins++;
+    }
+
+    fclose(fp);
+
+
+    //Load Firmware data
+    FILE *f;
+
+    char assembly[128];
+
     f = fopen(fw, "r");
     if (!f) return -1;
     if (fgetc(f) != ':')
@@ -109,6 +143,7 @@ int load_fw(core_8051* core, char *fw)
         int recordtype;
         int checksum;
         int i;
+        int step = 0;
         recordlength = readbyte(f);
         address = readbyte(f);
         address <<= 8;
@@ -124,10 +159,6 @@ int load_fw(core_8051* core, char *fw)
             int data = readbyte(f);
             checksum += data;
             core->mCodeMem[address + i] = data;
-
-            if(core->mCodeCov){
-                core->mCodeCov[address + i] = 0;
-            }
         }
 
         i = readbyte(f);
@@ -136,11 +167,25 @@ int load_fw(core_8051* core, char *fw)
         if (i != (checksum & 0xff))
             return -4; // checksum failure
 
-        decode(cur_core, address, assembly);
-        printf("%-5d %s\n",address + i, assembly);
+        i = 0;
+        while (i<recordlength)
+        {
+            step = decode(core, address + i, assembly);
+            if(core->mCodeCov[address + i]){
+               printf(KGRN "%-5d %s\n" RESET, address + i, assembly);
+            }else{
+               printf(KRED "%-5d %s\n" RESET, address + i, assembly);
+            }
+
+            i += step;
+            total_ins++;
+
+        }
+
         while (fgetc(f) != ':' && !feof(f)) {} // skip newline        
     }
     fclose(f);
+
     return -5;
 }
 
@@ -158,25 +203,14 @@ int main(int argc, char *argv[])
 
   cur_core = create_core();
 
-  if(load_fw(cur_core, argv[1])) return -1;
+  if(coverage(cur_core, argv[1])) return -1;
 
-  // for(int i=0; i<cur_core->mCodeMemSize; i++){
-  //   if(cur_core->mCodeMem[i]){
-  //     decode(cur_core, i, assembly);
-  //     printf("%-5d %s\n",i, assembly);
-  //   }
-  // }
+  printf(KYEL "-----------------------\n" RESET);  
+  printf(KYEL "Total Ins: %d\n" RESET, total_ins);  
+  printf(KYEL "Exec Ins:  %d\n" RESET, exe_ins);
+  printf(KYEL "Coverage:  %d%%\n" RESET, exe_ins*100/total_ins);
+  printf(KYEL "-----------------------\n" RESET);  
   
-  // initscr();                      
-  // getmaxyx(stdscr, row, col);      
-
-
-
-  // printw("<-Press Any Key->"); 
-  // getch();
-  // endwin();                         /* End curses mode */
-
-
   delete_core(cur_core);
 
   return 0;

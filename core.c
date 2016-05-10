@@ -468,12 +468,17 @@ void reset(struct em8051 *aCPU, int aWipe)
         memset(aCPU->mCodeMem, 0, aCPU->mCodeMemSize);
         memset(aCPU->mExtData, 0, aCPU->mExtDataSize);
         memset(aCPU->mLowerData, 0, 128);
-        if (aCPU->mUpperData) 
+        if (aCPU->mUpperData){ 
             memset(aCPU->mUpperData, 0, 128);
+        }
+
+        if (aCPU->mCodeCov){
+            memset(aCPU->mCodeCov, 0, aCPU->mCodeMemSize);
+        }
     }
 
     memset(aCPU->mSFR, 0, 128);
-
+    aCPU->mCodeCovTotalIns = 0;
     aCPU->mPC = 0;
     aCPU->mTickDelay = 0;
     aCPU->mSFR[REG_SP] = 7;
@@ -535,9 +540,6 @@ int load_obj(struct em8051 *aCPU, char *aFilename)
             int data = readbyte(f);
             checksum += data;
             aCPU->mCodeMem[address + i] = data;
-            if(aCPU->mCodeCov){
-                aCPU->mCodeCov[address + i] = 0;
-            }
         }
         i = readbyte(f);
         checksum &= 0xff;

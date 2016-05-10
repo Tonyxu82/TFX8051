@@ -27,6 +27,7 @@ frame fm;
 
 //Coverage
 int enable_coverage = 1;
+extern int total_ins;
 
 int opt_exception_iret_sp = 1;
 int opt_exception_iret_acc = 1;
@@ -101,10 +102,73 @@ void delete_core(core_8051* core){
 	FREE_CORE_MEM(core->mLowerData);
 	FREE_CORE_MEM(core->mUpperData);
 	FREE_CORE_MEM(core->mSFR);
+	FREE_CORE_MEM(core->mCodeCov);
 
 	core = NULL;
 }
 
+int readbyte(FILE * f);
+int load_fw(core_8051* core, char *fw)
+{
+    FILE *f;    
+
+    char assembly[128];
+
+    if (fw == 0 || fw[0] == 0)
+        return -1;
+    f = fopen(fw, "r");
+    if (!f) return -1;
+    if (fgetc(f) != ':')
+    {
+        fclose(f);
+        return -2; // unsupported file format
+    }
+    while (!feof(f))
+    {
+        int recordlength;
+        int address;
+        int recordtype;
+        int checksum;
+        int i;
+        int step = 0;
+        recordlength = readbyte(f);
+        address = readbyte(f);
+        address <<= 8;
+        address |= readbyte(f);
+        recordtype = readbyte(f);
+        if (recordtype == 1)
+            return 0; // we're done
+        if (recordtype != 0)
+            return -3; // unsupported record type
+        checksum = recordtype + recordlength + (address & 0xff) + (address >> 8); // final checksum = 1 + not(checksum)
+        for (i = 0; i < recordlength; i++)
+        {
+            int data = readbyte(f);
+            checksum += data;
+            core->mCodeMem[address + i] = data;
+        }
+
+        i = readbyte(f);
+        checksum &= 0xff;
+        checksum = 256 - checksum;
+        if (i != (checksum & 0xff))
+            return -4; // checksum failure
+
+        i = 0;
+        while (i<recordlength)
+        {
+            step = decode(core, address + i, assembly);
+            printf("%-5d %s\n",address + i, assembly);
+            i += step;
+            core->mCodeCovTotalIns++;
+
+        }
+
+        while (fgetc(f) != ':' && !feof(f)) {} // skip newline        
+    }
+    fclose(f);
+    return -5;
+}
 
 int eval();
 int run_core(){
@@ -123,6 +187,7 @@ int run_core(){
             ticked = tick(cur_core);
 
             if(ticked){
+
             	if(cur_core->mCodeCov){
 					cur_core->mCodeCov[old_pc]++;
 				}
@@ -216,9 +281,6 @@ int run_test(){
 		cur_test->expect[2][i] = i;
 	}
 
-	// cur_test->in[0][5]=7;
-	cur_test->in[0][7]=5;
-	cur_test->in[0][6]=13;
 
 	run_core();
 
@@ -229,6 +291,9 @@ int run_test(){
 			match = 0;
 		}
 	}
+
+	cur_test->in[0][7]=5;
+	cur_test->in[0][6]=13;
 
 	if(match){
 		printf(ANSI_COLOR_GREEN  "Pass" ANSI_COLOR_RESET "\n");
@@ -255,7 +320,9 @@ int main(int argc, char** argv){
 
 	before();
 
-	if(load_obj(cur_core, argv[1])) return -1;
+	if(load_fw(cur_core, argv[1])) return -1;
+
+	printf("Total Ins:%d\n", cur_core->mCodeCovTotalIns);
 
 	run_test();
 	
