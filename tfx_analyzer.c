@@ -172,9 +172,9 @@ int coverage(core_8051* core, char *fw)
         {
             step = decode(core, address + i, assembly);
             if(core->mCodeCov[address + i]){
-               printf(KGRN "%-5d %s\n" RESET, address + i, assembly);
+               printf(KGRN "%.4X %s\n" RESET, address + i, assembly);
             }else{
-               printf(KRED "%-5d %s\n" RESET, address + i, assembly);
+               printf(KRED "%.4X %s\n" RESET, address + i, assembly);
             }
 
             i += step;
