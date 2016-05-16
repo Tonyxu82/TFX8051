@@ -53,6 +53,9 @@ typedef struct test test;
 struct test{
 
 	char name[TEST_NAME];
+	char desc[TEST_DESC_MAX_SIZE];
+	char file[TEST_FIRMWARE_NAME];
+
 	struct em8051 *aCPU;
 	//input P0, P1, P2, P3
 	byte *in[4];
@@ -72,6 +75,7 @@ struct test{
 	//status of this test case
 	test_status status;
 };
+
 
 typedef struct test_suite test_suite;
 struct test_suite{
@@ -101,6 +105,8 @@ void delete_test(test* t);
 
 //int init_test();
 test* init_test(int in_size, int out_size);
+
+test* read_test(char* tf);
 
 void fprintf_test_suite(FILE* fp, test_suite* ts);
 

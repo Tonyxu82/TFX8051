@@ -1,0 +1,240 @@
+[32m0000 LJMP  #0006h
+[0m[32m005F LJMP  #0003h
+[0m[32m0003 LJMP  #0062h
+[0m[32m0062 MOV   R6, #00h
+[0m[32m0064 MOV   R7, #00h
+[0m[32m0066 MOV   A, R6
+[0m[32m0067 ADD   A, #08h
+[0m[32m0069 MOV   R0, A
+[0m[32m006A MOV   @R0, P0
+[0m[32m006C INC   R6
+[0m[32m006D CJNE  R6, #00h, #+1
+[0m[31m0070 INC   R7
+[0m[32m0071 CLR   C
+[0m[32m0072 MOV   A, R6
+[0m[32m0073 SUBB  A, #0Ah
+[0m[32m0075 MOV   A, R7
+[0m[32m0076 XRL   A, #80h
+[0m[32m0078 SUBB  A, #80h
+[0m[32m007A JC    #-22
+[0m[32m007C MOV   12h, #0Ah
+[0m[32m007F MOV   13h, #00h
+[0m[32m0082 MOV   DPTR, #00008h
+[0m[32m0085 MOV   B, #40h
+[0m[32m0088 LCALL #00A7h
+[0m[32m008B MOV   R6, #00h
+[0m[32m008D MOV   R7, #00h
+[0m[32m008F MOV   A, R6
+[0m[32m0090 ADD   A, #08h
+[0m[32m0092 MOV   R1, A
+[0m[32m0093 MOV   P2, @R1
+[0m[32m0095 INC   R6
+[0m[32m0096 CJNE  R6, #00h, #+1
+[0m[31m0099 INC   R7
+[0m[32m009A CLR   C
+[0m[32m009B MOV   A, R6
+[0m[32m009C SUBB  A, #0Ah
+[0m[32m009E MOV   A, R7
+[0m[32m009F XRL   A, #80h
+[0m[32m00A1 SUBB  A, #00h
+[0m[31m00A2 SJMP  #+64
+[0m[31m00A4 MOV   A, R2
+[0m[32m00A5 SJMP  #-2
+[0m[32m00A7 MOV   14h, DPL
+[0m[32m00AA MOV   15h, DPH
+[0m[32m00AD MOV   16h, B
+[0m[32m00B0 MOV   A, 12h
+[0m[32m00B2 ADD   A, #FFh
+[0m[32m00B4 MOV   R3, A
+[0m[32m00B5 MOV   A, 13h
+[0m[32m00B7 ADDC  A, #FFh
+[0m[32m00B9 MOV   R4, A
+[0m[32m00BA MOV   17h, #00h
+[0m[32m00BD MOV   R0, 17h
+[0m[32m00BF MOV   R1, #00h
+[0m[32m00C1 CLR   C
+[0m[32m00C2 MOV   A, R0
+[0m[32m00C3 SUBB  A, R3
+[0m[32m00C4 MOV   A, R1
+[0m[32m00C5 XRL   A, #80h
+[0m[32m00C7 MOV   B, R4
+[0m[32m00C9 XRL   B, #80h
+[0m[32m00CC SUBB  A, B
+[0m[32m00CE JC    #+1
+[0m[32m00D0 RET
+[0m[32m00D1 MOV   18h, #00h
+[0m[32m00D4 MOV   R0, 17h
+[0m[32m00D6 MOV   R2, #00h
+[0m[32m00D8 MOV   A, 12h
+[0m[32m00DA CLR   C
+[0m[32m00DB SUBB  A, R0
+[0m[32m00DC MOV   R0, A
+[0m[32m00DD MOV   A, 13h
+[0m[32m00DF SUBB  A, R2
+[0m[32m00E0 MOV   R2, A
+[0m[32m00E1 DEC   R0
+[0m[32m00E2 CJNE  R0, #FFh, #+1
+[0m[31m00E5 DEC   R2
+[0m[32m00E6 MOV   19h, 18h
+[0m[32m00E9 MOV   1Ah, #00h
+[0m[32m00EC CLR   C
+[0m[32m00ED MOV   A, 19h
+[0m[32m00EF SUBB  A, R0
+[0m[32m00F0 MOV   A, 1Ah
+[0m[32m00F2 XRL   A, #80h
+[0m[32m00F4 MOV   B, R2
+[0m[32m00F6 XRL   B, #80h
+[0m[32m00F9 SUBB  A, B
+[0m[32m00FB JNC   #+116
+[0m[32m00FD MOV   A, 18h
+[0m[32m00FF ADD   A, 14h
+[0m[32m0101 MOV   00h, A
+[0m[31m0102 DEC   R3
+[0m[32m0103 CLR   A
+[0m[32m0104 ADDC  A, 15h
+[0m[32m0106 MOV   1Ch, A
+[0m[32m0108 MOV   1Dh, 16h
+[0m[32m010B MOV   DPL, 1Bh
+[0m[32m010E MOV   DPH, 1Ch
+[0m[32m0111 MOV   B, 1Dh
+[0m[32m0114 LCALL #0191h
+[0m[32m0117 MOV   R2, A
+[0m[32m0118 MOV   A, #01h
+[0m[32m011A ADD   A, 19h
+[0m[32m011C MOV   R0, A
+[0m[32m011D CLR   A
+[0m[32m011E ADDC  A, 1Ah
+[0m[32m0120 MOV   R1, A
+[0m[32m0121 MOV   A, R0
+[0m[32m0122 ADD   A, 14h
+[0m[32m0124 MOV   R0, A
+[0m[32m0125 MOV   A, R1
+[0m[32m0126 ADDC  A, 15h
+[0m[32m0128 MOV   R1, A
+[0m[32m0129 MOV   R7, 16h
+[0m[32m012B MOV   DPL, R0
+[0m[32m012D MOV   DPH, R1
+[0m[32m012F MOV   B, R7
+[0m[32m0131 LCALL #0191h
+[0m[32m0134 MOV   R0, A
+[0m[32m0135 CLR   C
+[0m[32m0136 SUBB  A, R2
+[0m[32m0137 JNC   #+51
+[0m[32m0139 MOV   A, #01h
+[0m[32m013B ADD   A, 19h
+[0m[32m013D MOV   R6, A
+[0m[32m013E CLR   A
+[0m[32m013F ADDC  A, 1Ah
+[0m[32m0141 MOV   R7, A
+[0m[32m0142 MOV   A, R6
+[0m[32m0143 ADD   A, 14h
+[0m[32m0145 MOV   R6, A
+[0m[32m0146 MOV   A, R7
+[0m[32m0147 ADDC  A, 15h
+[0m[32m0149 MOV   R7, A
+[0m[32m014A MOV   R5, 16h
+[0m[32m014C MOV   DPL, R6
+[0m[32m014E MOV   DPH, R7
+[0m[32m0150 MOV   B, R5
+[0m[32m0152 LCALL #0191h
+[0m[32m0155 MOV   R1, A
+[0m[32m0156 MOV   DPL, 1Bh
+[0m[32m0159 MOV   DPH, 1Ch
+[0m[32m015C MOV   B, 1Dh
+[0m[32m015F LCALL #0176h
+[0m[32m0162 MOV   DPL, R6
+[0m[32m0164 MOV   DPH, R7
+[0m[32m0166 MOV   B, R5
+[0m[32m0168 MOV   A, R2
+[0m[32m0169 LCALL #0176h
+[0m[32m016C INC   18h
+[0m[32m016E LJMP  #00D4h
+[0m[32m0171 INC   17h
+[0m[32m0173 LJMP  #00BDh
+[0m[32m0035 CLR   A
+[0m[32m0036 MOV   R0, #FFh
+[0m[32m0038 MOV   @R0, A
+[0m[32m0039 DJNZ  R0, #-3
+[0m[32m0013 MOV   R1, #00h
+[0m[32m0015 MOV   A, R1
+[0m[32m0016 ORL   A, #00h
+[0m[32m0018 JZ    #+27
+[0m[31m001A MOV   R2, #00h
+[0m[31m001C MOV   DPTR, #001B1h
+[0m[31m001F MOV   R0, #00h
+[0m[31m0021 MOV   P2, #00h
+[0m[31m0024 CLR   A
+[0m[31m0025 MOVC  A, @A+DPTR
+[0m[31m0026 MOVX  @R0, A
+[0m[31m0027 INC   DPTR
+[0m[31m0028 INC   R0
+[0m[31m0029 CJNE  R0, #00h, #+2
+[0m[31m002C INC   P2
+[0m[31m002E DJNZ  R1, #-12
+[0m[31m0030 DJNZ  R2, #-14
+[0m[31m0032 MOV   00h, #00h
+[0m[31m0033 ORL   C, /F8h.7
+[0m[32m0176 JB   B.7, #+17
+[0m[32m0179 JNB   B.6, #+19
+[0m[32m017C MOV   DPH, R0
+[0m[32m017E MOV   R0, DPL
+[0m[32m0180 JB   B.5, #+9
+[0m[32m0183 MOV   @R0, A
+[0m[32m0184 MOV   R0, DPH
+[0m[32m0186 MOV   DPH, #00h
+[0m[32m0189 RET
+[0m[31m018A SJMP  #-2
+[0m[31m018C MOVX  @R0, A
+[0m[31m018D SJMP  #-11
+[0m[31m018F MOVX  @DPTR, A
+[0m[31m0190 RET
+[0m[32m003B MOV   R0, #00h
+[0m[32m003D MOV   A, R0
+[0m[32m003E ORL   A, #00h
+[0m[32m0040 JZ    #+10
+[0m[31m0042 MOV   R1, #00h
+[0m[31m0044 MOV   P2, #00h
+[0m[31m0047 CLR   A
+[0m[31m0048 MOVX  @R1, A
+[0m[31m0049 INC   R1
+[0m[31m004A DJNZ  R0, #-4
+[0m[32m004C MOV   R0, #00h
+[0m[32m004E MOV   A, R0
+[0m[32m004F ORL   A, #00h
+[0m[32m0051 JZ    #+12
+[0m[31m0053 MOV   R1, #00h
+[0m[31m0055 MOV   DPTR, #00000h
+[0m[31m0058 CLR   A
+[0m[31m0059 MOVX  @DPTR, A
+[0m[31m005A INC   DPTR
+[0m[31m005B DJNZ  R0, #-4
+[0m[31m005D DJNZ  R1, #-6
+[0m[32m0006 MOV   SP, #1Dh
+[0m[32m0009 LCALL #01ADh
+[0m[32m000C MOV   A, DPL
+[0m[32m000E JZ    #+3
+[0m[31m0010 LJMP  #0003h
+[0m[32m0191 JB   B.7, #+20
+[0m[32m0194 JNB   B.6, #+20
+[0m[32m0197 MOV   DPH, R0
+[0m[32m0199 MOV   R0, DPL
+[0m[32m019B JB   B.5, #+7
+[0m[32m019E MOV   A, @R0
+[0m[32m019F MOV   R0, DPH
+[0m[32m01A1 MOV   DPH, #00h
+[0m[32m01A4 RET
+[0m[31m01A5 MOVX  A, @R0
+[0m[31m01A6 SJMP  #-9
+[0m[31m01A8 CLR   A
+[0m[31m01A9 MOVC  A, @A+DPTR
+[0m[31m01AA RET
+[0m[31m01AB MOVX  A, @DPTR
+[0m[31m01AC RET
+[0m[32m01AD MOV   DPL, #00h
+[0m[32m01B0 RET
+[0m[33m-----------------------
+[0m[33mTotal Ins: 234
+[0m[33mExec Ins:  188
+[0m[33mCoverage:  80%
+[0m[33m-----------------------
+[0m

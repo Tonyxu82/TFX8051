@@ -70,9 +70,9 @@ void end_coverage(char* fw_name, core_8051* core){
 		}
 	}
 
-	if(core->mCodeCovTotalIns>0)
-		printf("Coverage:%d%%\n",pc_exe*100/core->mCodeCovTotalIns);
-	else
-		printf("Coverage Analyze Error\n");
+	// if(core->mCodeCovTotalIns>0)
+	// 	printf("Coverage:%d%%\n",pc_exe*100/core->mCodeCovTotalIns);
+	// else
+	// 	printf("Coverage Analyze Error\n");
 
 }

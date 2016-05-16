@@ -1,0 +1,14 @@
+{
+	"name":"sort_00000",
+	"desc":"This is a test case for sorting 10 numbers",
+	"file":"sort10.hex",
+	"input":[
+		{"pin":"P0", "data":[1, 8, 5, 6, 5, 4, 3, 2, 1, 0]}
+	],
+
+	"ouput":[
+		{"pin":"P2", "data":[0, 1, 1, 2, 3, 4, 5, 5, 6, 8]}
+	],
+
+	"status":0
+}

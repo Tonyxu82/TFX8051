@@ -11,11 +11,17 @@ gcc demo_tfx_4.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c t
 
 ./demo4 sort4.hex
 
+gcc demo_tfx_json.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c tfx_coverage.c libjsmn.a -std=c99 -D_BSD_SOURCE -o demoj
+
+./demoj test.json
+
 
 [DEMO of Trace Replay]
 gcc demo_tfx_replay.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c -std=c99 -D_BSD_SOURCE -o demo_replay
 
 ./demo_replay sort.hex trace/sort10_trace_00001.bin
+
+./demo_replay sort10.hex trace/sort10.hex_trace_00000.bin
 
 
 [KLEE for sort10.hex]

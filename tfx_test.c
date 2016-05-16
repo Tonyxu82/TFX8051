@@ -27,7 +27,9 @@
  */
 
 #include "tfx_test.h"
+#include "jsmn.h"
 #include <string.h>
+#include <errno.h>
 
 test_suite* create_test_suite(){
 
@@ -147,6 +149,186 @@ test* init_test(int in_size, int out_size){
 	t->expect_size[2] = out_size;
 	
 	return t;
+}
+
+static inline void *realloc_it(void *ptrmem, size_t size) {
+	void *p = realloc(ptrmem, size);
+	if (!p)  {
+		free (ptrmem);
+		fprintf(stderr, "realloc(): errno=%d\n", errno);
+	}
+	return p;
+}
+
+test* read_test(char* tf){
+	if(!tf) goto rt_exception;
+
+	FILE* fp = 	fopen(tf, "r");
+	if(!fp) goto rt_exception;
+	
+	char buf[BUFSIZ];
+	int r, i, j, s, data_size;
+	char* js = NULL;
+	size_t jslen = 0;
+
+	jsmn_parser p;
+	jsmntok_t *tok;
+	size_t tokcount = 2;
+
+	jsmn_init(&p);
+
+	tok = malloc(sizeof(*tok) * tokcount);
+	if (tok == NULL) {
+		fprintf(stderr, "malloc(): errno=%d\n", errno);
+		goto rt_exception;
+	}
+
+	r = fread(buf, 1, sizeof(buf), fp);
+
+	js = realloc_it(js, jslen+r+1);
+	if(!js) goto rt_exception;
+
+	strncpy(js+jslen, buf, r);
+	jslen = jslen + r;
+
+again:
+	r = jsmn_parse(&p, js, jslen, tok, tokcount);
+	if (r < 0) {
+		if (r == JSMN_ERROR_NOMEM) {
+			tokcount = tokcount * 2;
+			tok = realloc_it(tok, sizeof(*tok) * tokcount);
+			if (tok == NULL) {
+				goto rt_exception;
+			}
+
+			goto again;
+		}
+	} 
+
+	test*  t = malloc(sizeof(test));
+	if(!t) goto rt_exception;
+	memset(t, 0, sizeof(test));
+
+	//name
+	tok+=2;
+	snprintf(t->name, TEST_NAME, "%.*s", tok->end - tok->start, js+tok->start);
+	printf("TEST NAME: %s\n", t->name);
+
+
+	//desc
+	tok+=2;
+	snprintf(t->desc, TEST_DESC_MAX_SIZE, "%.*s", tok->end - tok->start, js+tok->start);
+	printf("TEST DESC: %s\n", t->desc);
+
+	//file
+	tok+=2;
+	snprintf(t->file, TEST_FIRMWARE_NAME, "%.*s", tok->end - tok->start, js+tok->start);
+	printf("TEST FILE: %s\n", t->file);
+
+	//get input
+	tok+=2;
+	s = tok->size;
+	char pin_name[5];
+	char pin_value[5];
+	int pin_index = -1;
+	for(i=0; i<s; i++){
+		tok +=3;
+		snprintf(pin_name, 5, "%.*s", tok->end - tok->start, js+tok->start);
+
+		if(!strcmp("P0", pin_name)){
+			pin_index = 0;
+		}else if(!strcmp("P1", pin_name)){
+			pin_index = 1;
+		}else if(!strcmp("P2", pin_name)){
+			pin_index = 2;
+		}else if(!strcmp("P3", pin_name)){
+			pin_index = 3;
+		}else{
+			goto rt_exception;
+		}
+
+
+		if(t->in[pin_index]){
+			goto rt_exception;
+		}
+
+		//get data from input pin 
+		tok +=2;
+		t->in_size[pin_index] = tok->size;
+		t->in[pin_index] = (byte*)malloc(t->in_size[pin_index]);
+
+		data_size = tok->size;
+		for(j=0; j<data_size; j++){
+			tok ++;
+			snprintf(pin_value, 5, "%.*s", tok->end - tok->start, js+tok->start);
+			int tmp = atoi(pin_value);
+			if(tmp<0 || tmp>255) goto rt_exception;
+			t->in[pin_index][j] = (byte)tmp; 
+		}
+
+	}
+
+	//get expect output array size
+	tok+=2;
+	s = tok->size;
+	pin_index = -1;
+	for(i=0; i<s; i++){
+		tok +=3;
+		snprintf(pin_name, 5, "%.*s", tok->end - tok->start, js+tok->start);
+
+		if(!strcmp("P0", pin_name)){
+			pin_index = 0;
+		}else if(!strcmp("P1", pin_name)){
+			pin_index = 1;
+		}else if(!strcmp("P2", pin_name)){
+			pin_index = 2;
+		}else if(!strcmp("P3", pin_name)){
+			pin_index = 3;
+		}else{
+			goto rt_exception;
+		}
+
+
+		if(t->expect[pin_index]){
+			goto rt_exception;
+		}
+
+		//get data from output pin 
+		tok +=2;
+		t->expect_size[pin_index] = tok->size;
+		t->out_size[pin_index] = tok->size;
+
+		t->expect[pin_index] = (byte*)malloc(t->expect_size[pin_index]);
+		memset(t->expect[pin_index], 0, t->expect_size[pin_index]);
+		t->out[pin_index] = (byte*)malloc(t->out_size[pin_index]);
+		memset(t->out[pin_index], 0, t->out_size[pin_index]);
+
+		data_size = tok->size;
+		for(j=0; j<data_size; j++){
+			tok ++;
+			snprintf(pin_value, 5, "%.*s", tok->end - tok->start, js+tok->start);
+			int tmp = atoi(pin_value);
+			if(tmp<0 || tmp>255) goto rt_exception;
+			t->expect[pin_index][j] = (byte)tmp; 
+		}
+	}
+
+	//get status
+	char status[5];
+	tok +=2;
+	snprintf(status, 5, "%.*s", tok->end - tok->start, js+tok->start);
+
+	t->status = atoi(status);
+
+	return t;
+
+rt_exception:
+	if(fp){
+		fclose(fp);
+		fp = NULL;
+	}
+
+	return NULL;
 }
 
 void fprintf_test_suite(FILE* fp, test_suite* ts){
