@@ -1,0 +1,9 @@
+KLEE: WARNING: undefined reference to function: core_sleep
+KLEE: WARNING: undefined reference to function: delete_test
+KLEE: WARNING: undefined reference to function: getTick
+KLEE: WARNING: undefined reference to function: init_test
+KLEE: WARNING: undefined reference to function: load_obj
+KLEE: WARNING: undefined reference to function: printf
+KLEE: WARNING: undefined reference to function: reset
+KLEE: WARNING: undefined reference to function: tick
+KLEE: WARNING ONCE: calling external: reset(16700976, 1)

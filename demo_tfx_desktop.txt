@@ -12,6 +12,10 @@ gcc demo_tfx_4.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c t
 ./demo4 sort4.hex
 
 
+[DEMO of Socket]
+
+gcc demo_tfx_socket.c  tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c tfx_coverage.c libjsmn.a -lqfm -std=c99 -D_BSD_SOURCE -o demosk
+
 [DEMO of Trace Replay]
 gcc demo_tfx_replay.c tfx_test.c core.c opcodes.c disasm.c tfx_io.c tfx_exception.c tfx_trace.c -std=c99 -D_BSD_SOURCE -o demo_replay
 

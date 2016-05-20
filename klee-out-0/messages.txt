@@ -1,0 +1,2 @@
+KLEE: ERROR: /home/tonyxu/Downloads/TFX8051/demo_tfx_10_klee.c:154: failed external call: reset
+KLEE: NOTE: now ignoring this error at this location

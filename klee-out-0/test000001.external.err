@@ -1,0 +1,8 @@
+Error: failed external call: reset
+File: /home/tonyxu/Downloads/TFX8051/demo_tfx_10_klee.c
+Line: 154
+assembly.ll line: 339
+Stack: 
+	#000000339 in create_core () at /home/tonyxu/Downloads/TFX8051/demo_tfx_10_klee.c:154
+	#100000523 in before () at /home/tonyxu/Downloads/TFX8051/demo_tfx_10_klee.c:219
+	#200000712 in main (argc=1, argv=16347392) at /home/tonyxu/Downloads/TFX8051/demo_tfx_10_klee.c:320
